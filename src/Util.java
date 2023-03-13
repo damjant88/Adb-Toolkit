@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class Util {
 
 	public String command(String command) {
-
 		String output = runCommand(command);
 		if (output == null)
 			return "";
@@ -19,7 +18,6 @@ public class Util {
 	}
 
 	public String runCommand(String command) {
-
 		String output = null;
 		// ProcessBuilder does not read spaces hence need to do this
 		String str[] = command.split(" ");
@@ -33,7 +31,6 @@ public class Util {
 				// if the process has not exited yet, destroy it forcefully
 				process.destroyForcibly();
 			}
-
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		} catch (InterruptedException e) {
@@ -44,7 +41,6 @@ public class Util {
 	}
 
 	public ArrayList<String> getConnectedDevices() {
-
 		ArrayList<String> devices = new ArrayList<>();
 		String output = command("adb devices");
 		devices.addAll(Arrays.stream(output.split("\n")).map(String::trim).filter(line -> line.endsWith("device"))
@@ -54,7 +50,6 @@ public class Util {
 	}
 
 	public String getWlanIp(String ID) {
-
 		String ip = "";
 		String output = command("adb -s " + ID + " shell ip addr show wlan0");
 		ip = Arrays.stream(output.split("\n")).map(String::trim)
@@ -65,77 +60,64 @@ public class Util {
 	}
 
 	public String getDeviceOSVersion(String ID) {
-
 		String os_version;
 		os_version = command("adb -s " + ID + " shell getprop ro.build.version.release");
 		return os_version.trim();
 	}
 
 	public String getDeviceName(String ID) {
-
 		return command("adb -s " + ID + " shell getprop ro.product.name");
 	}
 
 	public String getDeviceModel(String ID) {
-
 		String output;
 		output = command("adb -s " + ID + " shell getprop ro.product.model");
 		return output.trim();
 	}
 
 	public String getDeviceManufacturer(String ID) {
-
 		return command("adb -s " + ID + " shell getprop ro.product.manufacturer");
 	}
 
 	public void installApp(String ID, String path) {
-
 		command("adb -s " + ID + " install -r -d " + path);
 	}
 
 	public void saveLogs(String ID, String newFolder) {
-
 		command("adb -s " + ID + " pull " + "sdcard/Android/data/com.smithmicro.safepath.family/files/logs/ "
 				+ newFolder);
+		System.out.println("adb -s " + ID + " pull " + "sdcard/Android/data/com.smithmicro.safepath.family/files/logs/ "
+				+ newFolder); 
 	}
 
 	public void startWifiDebugging(String ID, String IP) {
-
 		String socket = IP + ":5555";
 		command("adb -s " + ID + " shell settings put global adb_wifi_enabled 1");
 		command("adb -s " + ID + " tcpip 5555");
 		command("adb -s " + ID + " connect " + socket);
-
 	}
 
 	public void stopWifiDebugging(String ID, String IP) {
-
 		String socket = IP + ":5555";
 		command("adb -s " + ID + " disconnect " + socket);
-
 	}
 
 	public void enableAnalyticsDebug(String ID, String installedPackage) {
-
 		command("adb -s " + ID + " shell setprop debug.firebase.analytics.app " + installedPackage);
 		command("adb -s " + ID + " shell setprop log.tag.FA VERBOSE");
 		System.out.println("adb -s " + ID + " shell setprop debug.firebase.analytics.app " + installedPackage);
-
 	}
 
 	public ArrayList<String> getInstalledPackages(String ID) {
-
 		ArrayList<String> packages = new ArrayList<>();
 		String[] output = command("adb -s " + ID + " shell pm list packages").split("\n");
 		for (String packagedID : output) {
 			packages.add(packagedID.replace("package:", "").trim());
 		}
 		return packages;
-
 	}
-
+	
 	public String getSafePathPackage(String ID) {
-
 		String installedPackage = "";
 		ArrayList<String> installedPackages = getInstalledPackages(ID);
 		for (int i = 0; i < installedPackages.size(); i++) {
@@ -147,7 +129,7 @@ public class Util {
 		}
 		return installedPackage;
 	}
-
+	
 	public boolean checkIfInstalled(String ID) {
 		String installedPackage = getSafePathPackage(ID);
 		if (installedPackage.equals("com.smithmicro.tmobile.familymode.test")
@@ -155,20 +137,29 @@ public class Util {
 				|| installedPackage.equals("com.att.securefamilycompanion")
 				|| installedPackage.equals("com.smithmicro.safepath.family")
 				|| installedPackage.equals("com.smithmicro.safepath.family.child")) {
-
 			return true;
-
 		} else {
-
 			return false;
-
 		}
 	}
-
+	
 	public void reboot(String ID) {
-
 		command("adb -s " + ID + " reboot");
-		System.out.println("adb -s " + ID + " reboot");
+	}
+	
+	public String takeScreenshot(String ID, String target, String fileName) {
+		command("adb -s " + ID + " shell screencap " + target + fileName);
+		System.out.println("adb -s " + ID + " shell screencap " + target + fileName);
+		return command("adb -s " + ID + " shell ls -t /sdcard/screenshot.png | grep " + fileName + " -m 1");		
+	}
+	
+	public boolean pullFile(String ID, String source, String target) {
+		String output = command("adb -s " + ID + " pull " + source + " " + target);
+		System.out.println("adb -s " + ID + " pull " + source + " " + target);
+		return output.contains("file pulled");
 	}
 
+	public void deleteFile(String ID, String target) {
+		command("adb -s " + ID + " shell rm " + target);
+	}
 }

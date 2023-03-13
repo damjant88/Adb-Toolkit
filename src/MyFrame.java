@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,8 +9,6 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,12 +18,15 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingWorker;
 import javax.swing.WindowConstants;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class MyFrame extends JFrame implements ActionListener, PropertyChangeListener {
 
@@ -35,39 +35,31 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 	 */
 	private static final long serialVersionUID = 1L;
 
-	JButton saveButton1, saveButton2, saveButton3, saveButton4;
+	Util command1 = new Util();
+	ArrayList<String> output1 = command1.getConnectedDevices();
+	private static int counter = 0;
+	private static final Object lock = new Object();
+	ArrayList<String> ips = new ArrayList<String>();
+	SimpleAttributeSet center = new SimpleAttributeSet();
+	ImageIcon icon = new ImageIcon("logo.png");
+
+	Path temp = null;
+	File file = null;
+
+	JButton saveLogsButton1, saveLogsButton2, saveLogsButton3, saveLogsButton4;
 	JButton wifiDebbug1, wifiDebbug2, wifiDebbug3, wifiDebbug4;
 	JButton enableFirebase1, enableFirebase2, enableFirebase3, enableFirebase4;
 	JButton reboot1, reboot2, reboot3, reboot4;
+	JButton takeScreenshotButton1, takeScreenshotButton2, takeScreenshotButton3, takeScreenshotButton4;
 	JButton devicesButton;
 	JButton fileButton;
 	JButton installButton;
-
-	JLabel label1a, label2a, label3a, label4a, label5a, label1, label2, label3, label4, label5, label6, label7, label8,
-			label9, label10, label11, label12, label13, label14, label15, label16, label17, label18, label19, label20;
-	JPanel panel1, panel2, panel3, panel4, panel5, subPanel;
-
-	JLabel[] staticLabels = { label1a, label2a, label3a, label4a };
-	JLabel[] dynamicLabels = { label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, label11,
-			label12, label13, label14, label15, label16 };
-
 	JRadioButton radio1, radio2, radio3, radio4;
-
-	Util command1 = new Util();
-	ArrayList<String> output1 = command1.getConnectedDevices();
-
 	JTextField fileTextField;
-
-	Path temp = null;
-
-	File file = null;
-
-	JProgressBar bar, bar2, bar3, bar4;
-
-	private static int counter = 0;
-	private static final Object lock = new Object();
-
-	ArrayList<String> ips = new ArrayList<String>();
+	JLabel labelIcon1, labelIcon2, labelIcon3, labelIcon4;
+	JTextPane staticPane;
+	JTextPane device1TextPane, device2TextPane, device3TextPane, device4TextPane;
+	JProgressBar bar;
 
 	MyFrame() {
 
@@ -75,6 +67,11 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		for (int i = 0; i < output1.size(); i++) {
 			ips.add(command1.getWlanIp(output1.get(i)));
 		}
+
+		ImageIcon buttonIcon = new ImageIcon("display.png");
+		Image image = buttonIcon.getImage();
+		Image newimg = image.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
+		buttonIcon = new ImageIcon(newimg);
 
 		// Setting the menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -88,136 +85,33 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 		this.setJMenuBar(menuBar);
 
-		// Setting up panels
-		panel1 = new JPanel();
-		panel1.setBounds(2, 60, 198, 210);
-		panel1.setBorder(BorderFactory.createEtchedBorder());
-		panel1.setLayout(new BorderLayout());
+		labelIcon1 = new JLabel();
+		labelIcon1.setBounds(290, 20, 25, 25);
+		labelIcon1.setIcon(buttonIcon);
+		labelIcon1.setVisible(false);
 
-		panel2 = new JPanel();
-		panel2.setBounds(200, 60, 200, 210);
-		panel2.setBorder(BorderFactory.createEtchedBorder());
-		panel2.setLayout(new BorderLayout());
-		panel2.setVisible(false);
+		labelIcon2 = new JLabel();
+		labelIcon2.setBounds(495, 20, 25, 25);
+		labelIcon2.setIcon(buttonIcon);
+		labelIcon2.setVisible(false);
 
-		panel3 = new JPanel();
-		panel3.setBounds(400, 60, 200, 210);
-		panel3.setBorder(BorderFactory.createEtchedBorder());
-		panel3.setLayout(new BorderLayout());
-		panel3.setVisible(false);
+		labelIcon3 = new JLabel();
+		labelIcon3.setBounds(700, 20, 25, 25);
+		labelIcon3.setIcon(buttonIcon);
+		labelIcon3.setVisible(false);
 
-		panel4 = new JPanel();
-		panel4.setBounds(600, 60, 200, 210);
-		panel4.setBorder(BorderFactory.createEtchedBorder());
-		panel4.setLayout(new BorderLayout());
-		panel4.setVisible(false);
-
-		panel5 = new JPanel();
-		panel5.setBounds(800, 60, 200, 210);
-		panel5.setBorder(BorderFactory.createEtchedBorder());
-		panel5.setLayout(new BorderLayout());
-		panel5.setVisible(false);
-
-		// Setting up labels
-		label1a = new JLabel();
-		label2a = new JLabel();
-		label3a = new JLabel();
-		label4a = new JLabel();
-		label5a = new JLabel();
-		label1 = new JLabel();
-		label2 = new JLabel();
-		label3 = new JLabel();
-		label4 = new JLabel();
-		label5 = new JLabel();
-		label6 = new JLabel();
-		label7 = new JLabel();
-		label8 = new JLabel();
-		label9 = new JLabel();
-		label10 = new JLabel();
-		label11 = new JLabel();
-		label12 = new JLabel();
-		label13 = new JLabel();
-		label14 = new JLabel();
-		label15 = new JLabel();
-		label16 = new JLabel();
-		label17 = new JLabel();
-		label18 = new JLabel();
-		label19 = new JLabel();
-		label20 = new JLabel();
-
-		label1a.setBounds(0, 0, 200, 30);
-		label1a.setText("Serial number:  ");
-		label1a.setHorizontalAlignment(JLabel.RIGHT);
-		label1a.setFont(new Font("Calibri", Font.BOLD, 20));
-		label2a.setBounds(0, 22, 200, 30);
-		label2a.setText("Manufacturer:  ");
-		label2a.setHorizontalAlignment(JLabel.RIGHT);
-		label2a.setFont(new Font("Calibri", Font.BOLD, 20));
-		label3a.setBounds(0, 44, 200, 30);
-		label3a.setText("Model:  ");
-		label3a.setHorizontalAlignment(JLabel.RIGHT);
-		label3a.setFont(new Font("Calibri", Font.BOLD, 20));
-		label4a.setBounds(0, 66, 200, 30);
-		label4a.setText("OS Version: ");
-		label4a.setHorizontalAlignment(JLabel.RIGHT);
-		label4a.setFont(new Font("Calibri", Font.BOLD, 20));
-		label5a.setBounds(0, 88, 200, 30);
-		label5a.setText("WLAN IP Address: ");
-		label5a.setHorizontalAlignment(JLabel.RIGHT);
-		label5a.setFont(new Font("Calibri", Font.BOLD, 20));
-		label1.setBounds(0, 0, 200, 30);
-		label1.setHorizontalAlignment(JLabel.CENTER);
-		label2.setBounds(0, 22, 200, 30);
-		label2.setHorizontalAlignment(JLabel.CENTER);
-		label3.setBounds(0, 44, 200, 30);
-		label3.setHorizontalAlignment(JLabel.CENTER);
-		label4.setBounds(0, 66, 200, 30);
-		label4.setHorizontalAlignment(JLabel.CENTER);
-		label5.setBounds(0, 88, 200, 30);
-		label5.setHorizontalAlignment(JLabel.CENTER);
-		label6.setBounds(0, 0, 200, 30);
-		label6.setHorizontalAlignment(JLabel.CENTER);
-		label7.setBounds(0, 22, 200, 30);
-		label7.setHorizontalAlignment(JLabel.CENTER);
-		label8.setBounds(0, 44, 200, 30);
-		label8.setHorizontalAlignment(JLabel.CENTER);
-		label9.setBounds(0, 66, 200, 30);
-		label9.setHorizontalAlignment(JLabel.CENTER);
-		label10.setBounds(0, 88, 200, 30);
-		label10.setHorizontalAlignment(JLabel.CENTER);
-		label11.setBounds(0, 0, 200, 30);
-		label11.setHorizontalAlignment(JLabel.CENTER);
-		label12.setBounds(0, 22, 200, 30);
-		label12.setHorizontalAlignment(JLabel.CENTER);
-		label13.setBounds(0, 44, 200, 30);
-		label13.setHorizontalAlignment(JLabel.CENTER);
-		label14.setBounds(0, 66, 200, 30);
-		label14.setHorizontalAlignment(JLabel.CENTER);
-		label15.setBounds(0, 88, 200, 30);
-		label15.setHorizontalAlignment(JLabel.CENTER);
-		label16.setBounds(0, 0, 200, 30);
-		label16.setHorizontalAlignment(JLabel.CENTER);
-		label17.setBounds(0, 22, 200, 30);
-		label17.setHorizontalAlignment(JLabel.CENTER);
-		label18.setBounds(0, 44, 200, 30);
-		label18.setHorizontalAlignment(JLabel.CENTER);
-		label19.setBounds(0, 66, 200, 30);
-		label19.setHorizontalAlignment(JLabel.CENTER);
-		label20.setBounds(0, 88, 200, 30);
-		label20.setHorizontalAlignment(JLabel.CENTER);
+		labelIcon4 = new JLabel();
+		labelIcon4.setBounds(920, 20, 25, 25);
+		labelIcon4.setIcon(buttonIcon);
+		labelIcon4.setVisible(false);
 
 		devicesButton = new JButton("Display Connected Devices");
-		devicesButton.setBounds(2, 2, 198, 50);
+		devicesButton.setBounds(0, 0, 198, 50);
 		devicesButton.addActionListener(this);
 		devicesButton.setFocusable(false);
 		devicesButton.setBorder(BorderFactory.createEtchedBorder());
 		devicesButton.setBackground(Color.lightGray);
 		devicesButton.setFont(new Font("Calibri", Font.BOLD, 13));
-
-		ImageIcon buttonIcon = new ImageIcon("display.png");
-		Image image = buttonIcon.getImage();
-		Image newimg = image.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
-		buttonIcon = new ImageIcon(newimg);
 		devicesButton.setIcon(buttonIcon);
 
 		fileButton = new JButton("Select Build");
@@ -229,48 +123,88 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		fileButton.setFont(new Font("Calibri", Font.BOLD, 15));
 		this.add(fileButton);
 
-		saveButton1 = new JButton("SafePath logs");
-		saveButton1.setBounds(210, 25, 90, 30);
-		saveButton1.addActionListener(this);
-		saveButton1.setFocusable(false);
-		saveButton1.setBorder(BorderFactory.createEtchedBorder());
-		saveButton1.setBackground(Color.lightGray);
-		saveButton1.setFont(new Font("Calibri", Font.BOLD, 15));
-		saveButton1.setVisible(false);
-		this.add(saveButton1);
+		saveLogsButton1 = new JButton("SafePath logs");
+		saveLogsButton1.setBounds(200, 160, 95, 30);
+		saveLogsButton1.addActionListener(this);
+		saveLogsButton1.setFocusable(false);
+		saveLogsButton1.setBorder(BorderFactory.createEtchedBorder());
+		saveLogsButton1.setBackground(Color.lightGray);
+		saveLogsButton1.setFont(new Font("Calibri", Font.BOLD, 15));
+		saveLogsButton1.setVisible(false);
+		this.add(saveLogsButton1);
 
-		saveButton2 = new JButton("SafePath logs");
-		saveButton2.setBounds(410, 25, 90, 30);
-		saveButton2.addActionListener(this);
-		saveButton2.setFocusable(false);
-		saveButton2.setBorder(BorderFactory.createEtchedBorder());
-		saveButton2.setBackground(Color.lightGray);
-		saveButton2.setFont(new Font("Calibri", Font.BOLD, 15));
-		saveButton2.setVisible(false);
-		this.add(saveButton2);
+		saveLogsButton2 = new JButton("SafePath logs");
+		saveLogsButton2.setBounds(410, 160, 95, 30);
+		saveLogsButton2.addActionListener(this);
+		saveLogsButton2.setFocusable(false);
+		saveLogsButton2.setBorder(BorderFactory.createEtchedBorder());
+		saveLogsButton2.setBackground(Color.lightGray);
+		saveLogsButton2.setFont(new Font("Calibri", Font.BOLD, 15));
+		saveLogsButton2.setVisible(false);
+		this.add(saveLogsButton2);
 
-		saveButton3 = new JButton("SafePath logs");
-		saveButton3.setBounds(610, 25, 90, 30);
-		saveButton3.addActionListener(this);
-		saveButton3.setFocusable(false);
-		saveButton3.setBorder(BorderFactory.createEtchedBorder());
-		saveButton3.setBackground(Color.lightGray);
-		saveButton3.setFont(new Font("Calibri", Font.BOLD, 15));
-		saveButton3.setVisible(false);
-		this.add(saveButton3);
+		saveLogsButton3 = new JButton("SafePath logs");
+		saveLogsButton3.setBounds(620, 160, 95, 30);
+		saveLogsButton3.addActionListener(this);
+		saveLogsButton3.setFocusable(false);
+		saveLogsButton3.setBorder(BorderFactory.createEtchedBorder());
+		saveLogsButton3.setBackground(Color.lightGray);
+		saveLogsButton3.setFont(new Font("Calibri", Font.BOLD, 15));
+		saveLogsButton3.setVisible(false);
+		this.add(saveLogsButton3);
 
-		saveButton4 = new JButton("SafePath logs");
-		saveButton4.setBounds(810, 25, 90, 30);
-		saveButton4.addActionListener(this);
-		saveButton4.setFocusable(false);
-		saveButton4.setBorder(BorderFactory.createEtchedBorder());
-		saveButton4.setBackground(Color.lightGray);
-		saveButton4.setFont(new Font("Calibri", Font.BOLD, 15));
-		saveButton4.setVisible(false);
-		this.add(saveButton4);
+		saveLogsButton4 = new JButton("SafePath logs");
+		saveLogsButton4.setBounds(830, 160, 95, 30);
+		saveLogsButton4.addActionListener(this);
+		saveLogsButton4.setFocusable(false);
+		saveLogsButton4.setBorder(BorderFactory.createEtchedBorder());
+		saveLogsButton4.setBackground(Color.lightGray);
+		saveLogsButton4.setFont(new Font("Calibri", Font.BOLD, 15));
+		saveLogsButton4.setVisible(false);
+		this.add(saveLogsButton4);
+
+		takeScreenshotButton1 = new JButton("Screenshot");
+		takeScreenshotButton1.setBounds(310, 190, 90, 30);
+		takeScreenshotButton1.addActionListener(this);
+		takeScreenshotButton1.setFocusable(false);
+		takeScreenshotButton1.setBorder(BorderFactory.createEtchedBorder());
+		takeScreenshotButton1.setBackground(Color.lightGray);
+		takeScreenshotButton1.setFont(new Font("Calibri", Font.BOLD, 15));
+		takeScreenshotButton1.setVisible(false);
+		this.add(takeScreenshotButton1);
+
+		takeScreenshotButton2 = new JButton("Screenshot");
+		takeScreenshotButton2.setBounds(520, 190, 90, 30);
+		takeScreenshotButton2.addActionListener(this);
+		takeScreenshotButton2.setFocusable(false);
+		takeScreenshotButton2.setBorder(BorderFactory.createEtchedBorder());
+		takeScreenshotButton2.setBackground(Color.lightGray);
+		takeScreenshotButton2.setFont(new Font("Calibri", Font.BOLD, 15));
+		takeScreenshotButton2.setVisible(false);
+		this.add(takeScreenshotButton2);
+
+		takeScreenshotButton3 = new JButton("Screenshot");
+		takeScreenshotButton3.setBounds(730, 190, 90, 30);
+		takeScreenshotButton3.addActionListener(this);
+		takeScreenshotButton3.setFocusable(false);
+		takeScreenshotButton3.setBorder(BorderFactory.createEtchedBorder());
+		takeScreenshotButton3.setBackground(Color.lightGray);
+		takeScreenshotButton3.setFont(new Font("Calibri", Font.BOLD, 15));
+		takeScreenshotButton3.setVisible(false);
+		this.add(takeScreenshotButton3);
+
+		takeScreenshotButton4 = new JButton("Screenshot");
+		takeScreenshotButton4.setBounds(940, 190, 90, 30);
+		takeScreenshotButton4.addActionListener(this);
+		takeScreenshotButton4.setFocusable(false);
+		takeScreenshotButton4.setBorder(BorderFactory.createEtchedBorder());
+		takeScreenshotButton4.setBackground(Color.lightGray);
+		takeScreenshotButton4.setFont(new Font("Calibri", Font.BOLD, 15));
+		takeScreenshotButton4.setVisible(false);
+		this.add(takeScreenshotButton4);
 
 		wifiDebbug1 = new JButton("WiFi Debug");
-		wifiDebbug1.setBounds(300, 25, 90, 30);
+		wifiDebbug1.setBounds(310, 160, 90, 30);
 		wifiDebbug1.addActionListener(this);
 		wifiDebbug1.setFocusable(false);
 		wifiDebbug1.setBorder(BorderFactory.createEtchedBorder());
@@ -285,7 +219,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(wifiDebbug1);
 
 		wifiDebbug2 = new JButton("WiFi Debug");
-		wifiDebbug2.setBounds(500, 25, 90, 30);
+		wifiDebbug2.setBounds(520, 160, 90, 30);
 		wifiDebbug2.addActionListener(this);
 		wifiDebbug2.setFocusable(false);
 		wifiDebbug2.setBorder(BorderFactory.createEtchedBorder());
@@ -300,7 +234,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(wifiDebbug2);
 
 		wifiDebbug3 = new JButton("WiFi Debug");
-		wifiDebbug3.setBounds(700, 25, 90, 30);
+		wifiDebbug3.setBounds(730, 160, 90, 30);
 		wifiDebbug3.addActionListener(this);
 		wifiDebbug3.setFocusable(false);
 		wifiDebbug3.setBorder(BorderFactory.createEtchedBorder());
@@ -315,7 +249,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(wifiDebbug3);
 
 		wifiDebbug4 = new JButton("WiFi Debug");
-		wifiDebbug4.setBounds(900, 25, 90, 30);
+		wifiDebbug4.setBounds(940, 160, 90, 30);
 		wifiDebbug4.addActionListener(this);
 		wifiDebbug4.setFocusable(false);
 		wifiDebbug4.setBorder(BorderFactory.createEtchedBorder());
@@ -330,7 +264,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(wifiDebbug4);
 
 		enableFirebase1 = new JButton("Enable Firebase");
-		enableFirebase1.setBounds(200, 400, 120, 30);
+		enableFirebase1.setBounds(200, 220, 120, 30);
 		enableFirebase1.addActionListener(this);
 		enableFirebase1.setFocusable(false);
 		enableFirebase1.setBorder(BorderFactory.createEtchedBorder());
@@ -340,7 +274,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(enableFirebase1);
 
 		enableFirebase2 = new JButton("Enable Firebase");
-		enableFirebase2.setBounds(320, 400, 120, 30);
+		enableFirebase2.setBounds(410, 220, 120, 30);
 		enableFirebase2.addActionListener(this);
 		enableFirebase2.setFocusable(false);
 		enableFirebase2.setBorder(BorderFactory.createEtchedBorder());
@@ -350,7 +284,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(enableFirebase2);
 
 		enableFirebase3 = new JButton("Enable Firebase");
-		enableFirebase3.setBounds(440, 400, 120, 30);
+		enableFirebase3.setBounds(620, 220, 120, 30);
 		enableFirebase3.addActionListener(this);
 		enableFirebase3.setFocusable(false);
 		enableFirebase3.setBorder(BorderFactory.createEtchedBorder());
@@ -360,7 +294,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(enableFirebase3);
 
 		enableFirebase4 = new JButton("Enable Firebase");
-		enableFirebase4.setBounds(560, 400, 120, 30);
+		enableFirebase4.setBounds(830, 220, 120, 30);
 		enableFirebase4.addActionListener(this);
 		enableFirebase4.setFocusable(false);
 		enableFirebase4.setBorder(BorderFactory.createEtchedBorder());
@@ -370,7 +304,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(enableFirebase4);
 
 		reboot1 = new JButton("Reboot");
-		reboot1.setBounds(200, 370, 120, 30);
+		reboot1.setBounds(200, 190, 95, 30);
 		reboot1.addActionListener(this);
 		reboot1.setFocusable(false);
 		reboot1.setBorder(BorderFactory.createEtchedBorder());
@@ -380,7 +314,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(reboot1);
 
 		reboot2 = new JButton("Reboot");
-		reboot2.setBounds(320, 370, 120, 30);
+		reboot2.setBounds(410, 190, 95, 30);
 		reboot2.addActionListener(this);
 		reboot2.setFocusable(false);
 		reboot2.setBorder(BorderFactory.createEtchedBorder());
@@ -390,7 +324,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(reboot2);
 
 		reboot3 = new JButton("Reboot");
-		reboot3.setBounds(440, 370, 120, 30);
+		reboot3.setBounds(620, 190, 95, 30);
 		reboot3.addActionListener(this);
 		reboot3.setFocusable(false);
 		reboot3.setBorder(BorderFactory.createEtchedBorder());
@@ -400,7 +334,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(reboot3);
 
 		reboot4 = new JButton("Reboot");
-		reboot4.setBounds(560, 370, 120, 30);
+		reboot4.setBounds(830, 190, 95, 30);
 		reboot4.addActionListener(this);
 		reboot4.setFocusable(false);
 		reboot4.setBorder(BorderFactory.createEtchedBorder());
@@ -425,55 +359,79 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		fileTextField.setEditable(false);
 		this.add(fileTextField);
 
+		staticPane = new JTextPane();
+		staticPane.setBounds(0, 50, 200, 110);
+		staticPane.setEditable(false);
+		staticPane.setVisible(true);
+		staticPane.setBackground(new Color(238, 238, 238));
+		staticPane.setBorder(BorderFactory.createEtchedBorder());
+		staticPane.setFont(new Font("Calibri", Font.BOLD, 16));
+		StyledDocument doc = staticPane.getStyledDocument();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_RIGHT);
+		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+		staticPane.setText("Serial number: " + "\n" + "Manufacturer: " + "\n" + "Model: " + "\n" + "OS Version: " + "\n"
+				+ "WiFi IP Address: ");
+		this.add(staticPane);
+
+		device1TextPane = new JTextPane();
+		device1TextPane.setBounds(200, 50, 200, 110);
+		device1TextPane.setEditable(false);
+		device1TextPane.setVisible(false);
+		device1TextPane.setBackground(new Color(238, 238, 238));
+		device1TextPane.setBorder(BorderFactory.createEtchedBorder());
+		device1TextPane.setFont(new Font("Calibri", Font.BOLD, 16));
+		StyledDocument doc1 = device1TextPane.getStyledDocument();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc1.setParagraphAttributes(0, doc1.getLength(), center, false);
+		this.add(device1TextPane);
+
+		device2TextPane = new JTextPane();
+		device2TextPane.setBounds(410, 50, 200, 110);
+		device2TextPane.setEditable(false);
+		device2TextPane.setVisible(false);
+		device2TextPane.setBackground(new Color(238, 238, 238));
+		device2TextPane.setBorder(BorderFactory.createEtchedBorder());
+		device2TextPane.setFont(new Font("Calibri", Font.BOLD, 16));
+		StyledDocument doc2 = device2TextPane.getStyledDocument();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc2.setParagraphAttributes(0, doc2.getLength(), center, false);
+		this.add(device2TextPane);
+
+		device3TextPane = new JTextPane();
+		device3TextPane.setBounds(620, 50, 200, 110);
+		device3TextPane.setEditable(false);
+		device3TextPane.setVisible(false);
+		device3TextPane.setBackground(new Color(238, 238, 238));
+		device3TextPane.setBorder(BorderFactory.createEtchedBorder());
+		device3TextPane.setFont(new Font("Calibri", Font.BOLD, 16));
+		StyledDocument doc3 = device3TextPane.getStyledDocument();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc3.setParagraphAttributes(0, doc3.getLength(), center, false);
+		this.add(device3TextPane);
+
+		device4TextPane = new JTextPane();
+		device4TextPane.setBounds(830, 50, 200, 110);
+		device4TextPane.setEditable(false);
+		device4TextPane.setVisible(false);
+		device4TextPane.setBackground(new Color(238, 238, 238));
+		device4TextPane.setBorder(BorderFactory.createEtchedBorder());
+		device4TextPane.setFont(new Font("Calibri", Font.BOLD, 16));
+		StyledDocument doc4 = device4TextPane.getStyledDocument();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc4.setParagraphAttributes(0, doc4.getLength(), center, false);
+		this.add(device4TextPane);
+
 		this.setTitle("Adb Toolkit");
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		this.setResizable(false);
-		this.setSize(1015, 500);
-		ImageIcon icon = new ImageIcon("logo.png");
+		this.setSize(1045, 420);
 		this.setIconImage(icon.getImage());
 		this.add(devicesButton);
-
-		panel1.add(label1a);
-		panel1.add(label2a);
-		panel1.add(label3a);
-		panel1.add(label4a);
-		panel1.add(label5a);
-		this.add(panel1);
-
-		this.add(panel2);
-		this.add(panel3);
-		this.add(panel4);
-		this.add(panel5);
-
-		panel2.setVisible(false);
-		panel3.setVisible(false);
-		panel4.setVisible(false);
-		panel5.setVisible(false);
-
-		panel2.add(label1);
-		panel2.add(label2);
-		panel2.add(label3);
-		panel2.add(label4);
-		panel2.add(label5);
-
-		panel3.add(label6);
-		panel3.add(label7);
-		panel3.add(label8);
-		panel3.add(label9);
-		panel3.add(label10);
-
-		panel4.add(label11);
-		panel4.add(label12);
-		panel4.add(label13);
-		panel4.add(label14);
-		panel4.add(label15);
-
-		panel5.add(label16);
-		panel5.add(label17);
-		panel5.add(label18);
-		panel5.add(label19);
-		panel5.add(label20);
+		this.add(labelIcon1);
+		this.add(labelIcon2);
+		this.add(labelIcon3);
+		this.add(labelIcon4);
 
 		radio1 = new JRadioButton("Device 1");
 		radio1.addActionListener(this);
@@ -483,19 +441,19 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 		radio2 = new JRadioButton("Device 2");
 		radio2.addActionListener(this);
-		radio2.setBounds(462, 2, 200, 15);
+		radio2.setBounds(467, 2, 200, 15);
 		radio2.setVisible(false);
 		this.add(radio2);
 
 		radio3 = new JRadioButton("Device 3");
 		radio3.addActionListener(this);
-		radio3.setBounds(662, 2, 200, 15);
+		radio3.setBounds(672, 2, 200, 15);
 		radio3.setVisible(false);
 		this.add(radio3);
 
 		radio4 = new JRadioButton("Device 4");
 		radio4.addActionListener(this);
-		radio4.setBounds(862, 2, 200, 15);
+		radio4.setBounds(892, 2, 200, 15);
 		radio4.setVisible(false);
 		this.add(radio4);
 
@@ -510,95 +468,76 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		for (int i = 0; i < output1.size(); i++) {
 
 			if (i == 0) {
-				label1.setText(output1.get(i));
-				label1.setVisible(true);
-				label2.setText(command1.getDeviceManufacturer(output1.get(i)));
-				label2.setVisible(true);
-				label3.setText(command1.getDeviceModel(output1.get(i)));
-				label3.setVisible(true);
-				label4.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-				label4.setVisible(true);
-				label5.setText(ips.get(0));
-				label5.setVisible(true);
-				panel2.setVisible(true);
+
 				radio1.setSelected(true);
 				radio1.setVisible(true);
-				saveButton1.setVisible(true);
+				labelIcon1.setVisible(true);
+				saveLogsButton1.setVisible(true);
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug1.setText("Disable WiFi");
 				}
 				wifiDebbug1.setVisible(true);
 				enableFirebase1.setVisible(true);
 				reboot1.setVisible(true);
+				device1TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i)) + "\n"
+						+ command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+						+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+				device1TextPane.setVisible(true);
+				takeScreenshotButton1.setVisible(true);
 
 			} else if (i == 1) {
 
-				label6.setText(output1.get(i));
-				label6.setVisible(true);
-				label7.setText(command1.getDeviceManufacturer(output1.get(i)));
-				label7.setVisible(true);
-				label8.setText(command1.getDeviceModel(output1.get(i)));
-				label8.setVisible(true);
-				label9.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-				label9.setVisible(true);
-				label10.setText(ips.get(1));
-				label10.setVisible(true);
-				panel3.setVisible(true);
 				radio2.setSelected(true);
 				radio2.setVisible(true);
-				saveButton2.setVisible(true);
+				labelIcon2.setVisible(true);
+				saveLogsButton2.setVisible(true);
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug2.setText("Disable WiFi");
 				}
 				wifiDebbug2.setVisible(true);
 				enableFirebase2.setVisible(true);
 				reboot2.setVisible(true);
+				device2TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i)) + "\n"
+						+ command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+						+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+				device2TextPane.setVisible(true);
+				takeScreenshotButton2.setVisible(true);
 
 			} else if (i == 2) {
 
-				label11.setText(output1.get(i));
-				label11.setVisible(true);
-				label12.setText(command1.getDeviceManufacturer(output1.get(i)));
-				label12.setVisible(true);
-				label13.setText(command1.getDeviceModel(output1.get(i)));
-				label13.setVisible(true);
-				label14.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-				label14.setVisible(true);
-				label15.setText(ips.get(2));
-				label15.setVisible(true);
-				panel4.setVisible(true);
 				radio3.setSelected(true);
 				radio3.setVisible(true);
-				saveButton3.setVisible(true);
+				labelIcon3.setVisible(true);
+				saveLogsButton3.setVisible(true);
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug3.setText("Disable WiFi");
 				}
 				wifiDebbug3.setVisible(true);
 				enableFirebase3.setVisible(true);
 				reboot3.setVisible(true);
+				device3TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i)) + "\n"
+						+ command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+						+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+				device3TextPane.setVisible(true);
+				takeScreenshotButton3.setVisible(true);
 
 			} else if (i == 3) {
 
-				label16.setText(output1.get(i));
-				label16.setVisible(true);
-				label17.setText(command1.getDeviceManufacturer(output1.get(i)));
-				label17.setVisible(true);
-				label18.setText(command1.getDeviceModel(output1.get(i)));
-				label18.setVisible(true);
-				label19.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-				label19.setVisible(true);
-				label20.setText(ips.get(3));
-				label20.setVisible(true);
-				panel5.setVisible(true);
 				radio4.setSelected(true);
 				radio4.setVisible(true);
-				saveButton4.setVisible(true);
+				labelIcon4.setVisible(true);
+				saveLogsButton4.setVisible(true);
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug4.setText("Disable WiFi");
 				}
 				wifiDebbug4.setVisible(true);
 				enableFirebase4.setVisible(true);
 				reboot4.setVisible(true);
+				device4TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i)) + "\n"
+						+ command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+						+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+				device4TextPane.setVisible(true);
+				takeScreenshotButton4.setVisible(true);
 			}
 
 		}
@@ -625,20 +564,31 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				ips.add(command1.getWlanIp(output1.get(i)));
 			}
 
-			// set panels and radio buttons invisible
-			panel2.setVisible(false);
-			panel3.setVisible(false);
-			panel4.setVisible(false);
-			panel5.setVisible(false);
+			device1TextPane.setVisible(false);
+			device2TextPane.setVisible(false);
+			device3TextPane.setVisible(false);
+			device4TextPane.setVisible(false);
+
 			radio1.setVisible(false);
 			radio2.setVisible(false);
 			radio3.setVisible(false);
 			radio4.setVisible(false);
 
-			saveButton1.setVisible(false);
-			saveButton2.setVisible(false);
-			saveButton3.setVisible(false);
-			saveButton4.setVisible(false);
+			labelIcon1.setVisible(false);
+			labelIcon2.setVisible(false);
+			labelIcon3.setVisible(false);
+			labelIcon4.setVisible(false);
+
+			saveLogsButton1.setVisible(false);
+			saveLogsButton2.setVisible(false);
+			saveLogsButton3.setVisible(false);
+			saveLogsButton4.setVisible(false);
+
+			takeScreenshotButton1.setVisible(false);
+			takeScreenshotButton2.setVisible(false);
+			takeScreenshotButton3.setVisible(false);
+			takeScreenshotButton4.setVisible(false);
+
 			wifiDebbug1.setVisible(false);
 			wifiDebbug2.setVisible(false);
 			wifiDebbug3.setVisible(false);
@@ -654,134 +604,86 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			reboot3.setVisible(false);
 			reboot4.setVisible(false);
 
-			panel2.add(label1);
-			panel2.add(label2);
-			panel2.add(label3);
-			panel2.add(label4);
-			panel2.add(label5);
-
-			panel3.add(label6);
-			panel3.add(label7);
-			panel3.add(label8);
-			panel3.add(label9);
-			panel3.add(label10);
-
-			panel4.add(label11);
-			panel4.add(label12);
-			panel4.add(label13);
-			panel4.add(label14);
-			panel4.add(label15);
-
-			panel5.add(label16);
-			panel5.add(label17);
-			panel5.add(label18);
-			panel5.add(label19);
-			panel5.add(label20);
-
 			for (int i = 0; i < output1.size(); i++) {
-
 				if (i == 0) {
 
-					panel2.setVisible(true);
-					label1.setText(output1.get(i));
-					label1.setVisible(true);
-					label2.setText(command1.getDeviceManufacturer(output1.get(i)));
-					label2.setVisible(true);
-					label3.setText(command1.getDeviceModel(output1.get(i)));
-					label3.setVisible(true);
-					label4.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-					label4.setVisible(true);
-					label5.setText(ips.get(0));
-					label5.setVisible(true);
 					radio1.setSelected(true);
 					radio1.setVisible(true);
-					saveButton1.setVisible(true);
+					labelIcon1.setVisible(true);
+
+					saveLogsButton1.setVisible(true);
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug1.setText("Disable WiFi");
 					}
 					wifiDebbug1.setVisible(true);
 					enableFirebase1.setVisible(true);
 					reboot1.setVisible(true);
+					device1TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i))
+							+ "\n" + command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+							+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+					device1TextPane.setVisible(true);
+					takeScreenshotButton1.setVisible(true);
 
 				} else if (i == 1) {
 
-					panel3.setVisible(true);
-					label6.setText(output1.get(i));
-					label6.setVisible(true);
-					label7.setText(command1.getDeviceManufacturer(output1.get(i)));
-					label7.setVisible(true);
-					label8.setText(command1.getDeviceModel(output1.get(i)));
-					label8.setVisible(true);
-					label9.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-					label9.setVisible(true);
-					label10.setText(ips.get(1));
-					label10.setVisible(true);
 					radio2.setSelected(true);
 					radio2.setVisible(true);
-					saveButton2.setVisible(true);
+					labelIcon2.setVisible(true);
+					saveLogsButton2.setVisible(true);
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug2.setText("Disable WiFi");
 					}
 					wifiDebbug2.setVisible(true);
 					enableFirebase2.setVisible(true);
 					reboot2.setVisible(true);
+					device2TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i))
+							+ "\n" + command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+							+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+					device2TextPane.setVisible(true);
+					takeScreenshotButton2.setVisible(true);
 
 				} else if (i == 2) {
 
-					panel4.setVisible(true);
-					label11.setText(output1.get(i));
-					label11.setVisible(true);
-					label12.setText(command1.getDeviceManufacturer(output1.get(i)));
-					label12.setVisible(true);
-					label13.setText(command1.getDeviceModel(output1.get(i)));
-					label13.setVisible(true);
-					label14.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-					label14.setVisible(true);
-					label15.setText(ips.get(2));
-					label15.setVisible(true);
 					radio3.setSelected(true);
 					radio3.setVisible(true);
-					saveButton3.setVisible(true);
+					labelIcon3.setVisible(true);
+					saveLogsButton3.setVisible(true);
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug3.setText("Disable WiFi");
 					}
 					wifiDebbug3.setVisible(true);
 					enableFirebase3.setVisible(true);
 					reboot3.setVisible(true);
+					device3TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i))
+							+ "\n" + command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+							+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+					device3TextPane.setVisible(true);
+					takeScreenshotButton3.setVisible(true);
 
 				} else if (i == 3) {
 
-					panel5.setVisible(true);
-					label16.setText(output1.get(i));
-					label16.setVisible(true);
-					label17.setText(command1.getDeviceManufacturer(output1.get(i)));
-					label17.setVisible(true);
-					label18.setText(command1.getDeviceModel(output1.get(i)));
-					label18.setVisible(true);
-					label19.setText("Android " + command1.getDeviceOSVersion(output1.get(i)));
-					label19.setVisible(true);
-					label20.setText(ips.get(3));
-					label20.setVisible(true);
 					radio4.setSelected(true);
 					radio4.setVisible(true);
-					saveButton4.setVisible(true);
+					labelIcon4.setVisible(true);
+					saveLogsButton4.setVisible(true);
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug4.setText("Disable WiFi");
 					}
 					wifiDebbug4.setVisible(true);
 					enableFirebase4.setVisible(true);
 					reboot4.setVisible(true);
-
+					device4TextPane.setText(output1.get(i) + "\n" + command1.getDeviceManufacturer(output1.get(i))
+							+ "\n" + command1.getDeviceModel(output1.get(i)) + "\n" + "Android "
+							+ command1.getDeviceOSVersion(output1.get(i)) + "\n" + ips.get(i));
+					device4TextPane.setVisible(true);
+					takeScreenshotButton4.setVisible(true);
 				}
-
 			}
 
 		} else if (e.getSource() == fileButton) {
-
 			JFileChooser fileChooser = new JFileChooser(
 					"C:\\Users\\dtomic\\OneDrive - Smith Micro Software\\SP7\\Master builds\\");
 			int response = fileChooser.showOpenDialog(null);
-
 			if (response == JFileChooser.APPROVE_OPTION) {
 				file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 				fileTextField.setText(file.getName());
@@ -792,12 +694,10 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				bar.setString("Waiting for build...");
 			}
 
-		} else if (e.getSource() == saveButton1) {
-
+		} else if (e.getSource() == saveLogsButton1) {
 			JFileChooser fileChooser = new JFileChooser("C:\\logs");
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int response = fileChooser.showSaveDialog(null);
-
 			if (response == JFileChooser.APPROVE_OPTION) {
 				file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 				output1 = command1.getConnectedDevices();
@@ -805,8 +705,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 			}
 
-		} else if (e.getSource() == saveButton2) {
-
+		} else if (e.getSource() == saveLogsButton2) {
 			JFileChooser fileChooser = new JFileChooser("C:\\logs");
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int response = fileChooser.showSaveDialog(null);
@@ -817,8 +716,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				command1.saveLogs(output1.get(1), file.getAbsolutePath());
 			}
 
-		} else if (e.getSource() == saveButton3) {
-
+		} else if (e.getSource() == saveLogsButton3) {
 			JFileChooser fileChooser = new JFileChooser("C:\\logs");
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int response = fileChooser.showSaveDialog(null);
@@ -829,8 +727,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				command1.saveLogs(output1.get(2), file.getAbsolutePath());
 			}
 
-		} else if (e.getSource() == saveButton4) {
-
+		} else if (e.getSource() == saveLogsButton4) {
 			JFileChooser fileChooser = new JFileChooser("C:\\logs");
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int response = fileChooser.showSaveDialog(null);
@@ -841,6 +738,38 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				command1.saveLogs(output1.get(3), file.getAbsolutePath());
 			}
 
+		} else if (e.getSource() == takeScreenshotButton1) {
+			output1 = command1.getConnectedDevices();
+			String output = command1.takeScreenshot(output1.get(0), "sdcard/", "screenshot.png");
+			new File("C:/AdbToolkit_Screenshots/Device1").mkdirs();
+			command1.pullFile(output1.get(0), output, "C:/AdbToolkit_Screenshots/Device1");
+			JOptionPane.showMessageDialog(this, "Device1 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device1" , "Screenshot Capture",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		} else if (e.getSource() == takeScreenshotButton2) {
+			output1 = command1.getConnectedDevices();
+			String output = command1.takeScreenshot(output1.get(1), "sdcard/", "screenshot.png");
+			new File("C:/AdbToolkit_Screenshots/Device2").mkdirs();
+			command1.pullFile(output1.get(1), output,"C:/AdbToolkit_Screenshots/Device2");
+			JOptionPane.showMessageDialog(this, "Device2 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device2" , "Screenshot Capture",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		} else if (e.getSource() == takeScreenshotButton3) {
+			output1 = command1.getConnectedDevices();
+			String output = command1.takeScreenshot(output1.get(2), "sdcard/", "screenshot.png");
+			new File("C:/AdbToolkit_Screenshots/Device3").mkdirs();
+			command1.pullFile(output1.get(2), output, "C:/AdbToolkit_Screenshots/Device3");
+			JOptionPane.showMessageDialog(this, "Device3 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device3" , "Screenshot Capture",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		} else if (e.getSource() == takeScreenshotButton4) {
+			output1 = command1.getConnectedDevices();
+			String output = command1.takeScreenshot(output1.get(3), "sdcard/", "screenshot.png");
+			new File("C:/AdbToolkit_Screenshots/Device4").mkdirs();
+			command1.pullFile(output1.get(3), output, "C:/AdbToolkit_Screenshots/Device4");
+			JOptionPane.showMessageDialog(this, "Device4 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device4" , "Screenshot Capture",
+					JOptionPane.INFORMATION_MESSAGE);
+			
 		} else if (e.getSource() == wifiDebbug1) {
 			if (!output1.get(0).endsWith(":5555")) {
 				command1.startWifiDebugging(output1.get(0), ips.get(0));
@@ -855,8 +784,9 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				command1.stopWifiDebugging(output1.get(0), ips.get(0));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
 						JOptionPane.INFORMATION_MESSAGE);
-				devicesButton.doClick(500);
+				devicesButton.doClick(100);
 			}
+
 		} else if (e.getSource() == wifiDebbug2) {
 			if (!output1.get(1).endsWith(":5555")) {
 				command1.startWifiDebugging(output1.get(1), ips.get(1));
@@ -868,12 +798,12 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				wifiDebbug4.setText("Disable WiFi");
 				devicesButton.doClick(500);
 			} else {
-
 				command1.stopWifiDebugging(output1.get(1), ips.get(1));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
 						JOptionPane.INFORMATION_MESSAGE);
-				devicesButton.doClick(500);
+				devicesButton.doClick(100);
 			}
+
 		} else if (e.getSource() == wifiDebbug3) {
 			if (!output1.get(2).endsWith(":5555")) {
 				command1.startWifiDebugging(output1.get(2), ips.get(2));
@@ -885,12 +815,12 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				wifiDebbug4.setText("Disable WiFi");
 				devicesButton.doClick(500);
 			} else {
-
 				command1.stopWifiDebugging(output1.get(2), ips.get(2));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
 						JOptionPane.INFORMATION_MESSAGE);
-				devicesButton.doClick(500);
+				devicesButton.doClick(100);
 			}
+
 		} else if (e.getSource() == wifiDebbug4) {
 			if (!output1.get(3).endsWith(":5555")) {
 				command1.startWifiDebugging(output1.get(3), ips.get(3));
@@ -902,14 +832,13 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				wifiDebbug4.setText("Disable WiFi");
 				devicesButton.doClick(500);
 			} else {
-
 				command1.stopWifiDebugging(output1.get(3), ips.get(3));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
 						JOptionPane.INFORMATION_MESSAGE);
-				devicesButton.doClick(500);
+				devicesButton.doClick(100);
 			}
-		} else if (e.getSource() == enableFirebase1) {
 
+		} else if (e.getSource() == enableFirebase1) {
 			output1 = command1.getConnectedDevices();
 			command1.enableAnalyticsDebug(output1.get(0), command1.getSafePathPackage(output1.get(0)));
 			if (command1.checkIfInstalled(output1.get(0))) {
@@ -923,7 +852,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			}
 
 		} else if (e.getSource() == enableFirebase2) {
-
 			output1 = command1.getConnectedDevices();
 			command1.enableAnalyticsDebug(output1.get(1), command1.getSafePathPackage(output1.get(1)));
 			if (command1.checkIfInstalled(output1.get(1))) {
@@ -937,7 +865,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			}
 
 		} else if (e.getSource() == enableFirebase3) {
-
 			output1 = command1.getConnectedDevices();
 			command1.enableAnalyticsDebug(output1.get(2), command1.getSafePathPackage(output1.get(2)));
 			if (command1.checkIfInstalled(output1.get(2))) {
@@ -951,7 +878,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			}
 
 		} else if (e.getSource() == enableFirebase4) {
-
 			output1 = command1.getConnectedDevices();
 			command1.enableAnalyticsDebug(output1.get(3), command1.getSafePathPackage(output1.get(3)));
 			if (command1.checkIfInstalled(output1.get(3))) {
@@ -963,22 +889,16 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				JOptionPane.showMessageDialog(this, "App is not installed!", "Enable Firebase Debugging",
 						JOptionPane.ERROR_MESSAGE);
 			}
-
 		} else if (e.getSource() == reboot1) {
-
 			command1.reboot(output1.get(0));
 
 		} else if (e.getSource() == reboot2) {
-
-			System.out.println(output1.get(1));
 			command1.reboot(output1.get(1));
 
 		} else if (e.getSource() == reboot3) {
-
 			command1.reboot(output1.get(2));
 
 		} else if (e.getSource() == reboot4) {
-
 			command1.reboot(output1.get(3));
 
 		} else if (e.getSource() == installButton) {
@@ -987,7 +907,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			bar.setIndeterminate(true);
 			bar.setBackground(new Color(238, 238, 238));
 			installButton.setEnabled(false);
-
 			if (radio1.isSelected() && output1.size() > 0) {
 				Task task1 = new Task("adb -s " + output1.get(0) + " install " + "\"" + file.getAbsolutePath() + "\"");
 				task1.addPropertyChangeListener(this);
