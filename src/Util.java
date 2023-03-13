@@ -91,15 +91,13 @@ public class Util {
 	}
 
 	public void startWifiDebugging(String ID, String IP) {
-		String socket = IP + ":5555";
 		command("adb -s " + ID + " shell settings put global adb_wifi_enabled 1");
 		command("adb -s " + ID + " tcpip 5555");
-		command("adb -s " + ID + " connect " + socket);
+		command("adb -s " + ID + " connect " + IP);
 	}
 
 	public void stopWifiDebugging(String ID, String IP) {
-		String socket = IP + ":5555";
-		command("adb -s " + ID + " disconnect " + socket);
+		command("adb -s " + ID + " disconnect " + IP);
 	}
 
 	public void enableAnalyticsDebug(String ID, String installedPackage) {

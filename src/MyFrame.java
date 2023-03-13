@@ -41,6 +41,9 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 	private static final Object lock = new Object();
 	ArrayList<String> ips = new ArrayList<String>();
 	SimpleAttributeSet center = new SimpleAttributeSet();
+	ImageIcon logo_tmo = new ImageIcon("ic_launcher_tmo.png");
+	ImageIcon logo_att = new ImageIcon("ic_launcher_att.png");
+	ImageIcon logo_product = new ImageIcon("ic_launcher_product.png");
 	ImageIcon icon = new ImageIcon("logo.png");
 
 	Path temp = null;
@@ -72,6 +75,21 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		Image image = buttonIcon.getImage();
 		Image newimg = image.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 		buttonIcon = new ImageIcon(newimg);
+		
+		ImageIcon logo_tmo = new ImageIcon("ic_launcher_tmo.png");
+		image = logo_tmo.getImage();
+		newimg = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		logo_tmo = new ImageIcon(newimg);
+		
+		ImageIcon logo_att = new ImageIcon("ic_launcher_att.png");
+		image = logo_att.getImage();
+		newimg = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		logo_att = new ImageIcon(newimg);
+		
+		ImageIcon logo_product = new ImageIcon("ic_launcher_product.png");
+		image = logo_product.getImage();
+		newimg = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+		logo_product = new ImageIcon(newimg);
 
 		// Setting the menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -87,17 +105,14 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 		labelIcon1 = new JLabel();
 		labelIcon1.setBounds(290, 20, 25, 25);
-		labelIcon1.setIcon(buttonIcon);
 		labelIcon1.setVisible(false);
 
 		labelIcon2 = new JLabel();
 		labelIcon2.setBounds(495, 20, 25, 25);
-		labelIcon2.setIcon(buttonIcon);
 		labelIcon2.setVisible(false);
 
 		labelIcon3 = new JLabel();
 		labelIcon3.setBounds(700, 20, 25, 25);
-		labelIcon3.setIcon(buttonIcon);
 		labelIcon3.setVisible(false);
 
 		labelIcon4 = new JLabel();
@@ -471,8 +486,21 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 				radio1.setSelected(true);
 				radio1.setVisible(true);
+				System.out.println(command1.getSafePathPackage(output1.get(0)));
+				switch (command1.getSafePathPackage(output1.get(0))) {
+				case "com.smithmicro.tmobile.familymode.test":
+					labelIcon1.setIcon(logo_tmo);
+					break;
+				case "com.smithmicro.safepath.family":
+					labelIcon1.setIcon(logo_product);
+					break;
+				case "com.smithmicro.att.securefamily":
+					labelIcon1.setIcon(logo_att);
+					break;
+				}
 				labelIcon1.setVisible(true);
 				saveLogsButton1.setVisible(true);
+				wifiDebbug1.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug1.setText("Disable WiFi");
 				}
@@ -489,8 +517,21 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 				radio2.setSelected(true);
 				radio2.setVisible(true);
+				System.out.println(command1.getSafePathPackage(output1.get(1)));
+				switch (command1.getSafePathPackage(output1.get(1))) {
+				case "com.smithmicro.tmobile.familymode.test":
+					labelIcon2.setIcon(logo_tmo);
+					break;
+				case "com.smithmicro.safepath.family":
+					labelIcon2.setIcon(logo_product);
+					break;
+				case "com.smithmicro.att.securefamily":
+					labelIcon2.setIcon(logo_att);
+					break;
+				}
 				labelIcon2.setVisible(true);
 				saveLogsButton2.setVisible(true);
+				wifiDebbug2.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug2.setText("Disable WiFi");
 				}
@@ -507,8 +548,21 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 				radio3.setSelected(true);
 				radio3.setVisible(true);
+				System.out.println(command1.getSafePathPackage(output1.get(2)));
+				switch (command1.getSafePathPackage(output1.get(2))) {
+				case "com.smithmicro.tmobile.familymode.test":
+					labelIcon3.setIcon(logo_tmo);
+					break;
+				case "com.smithmicro.safepath.family":
+					labelIcon3.setIcon(logo_product);
+					break;
+				case "com.smithmicro.att.securefamily":
+					labelIcon3.setIcon(logo_att);
+					break;
+				}
 				labelIcon3.setVisible(true);
 				saveLogsButton3.setVisible(true);
+				wifiDebbug3.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug3.setText("Disable WiFi");
 				}
@@ -525,8 +579,21 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 				radio4.setSelected(true);
 				radio4.setVisible(true);
+				System.out.println(command1.getSafePathPackage(output1.get(3)));
+				switch (command1.getSafePathPackage(output1.get(3))) {
+				case "com.smithmicro.tmobile.familymode.test":
+					labelIcon4.setIcon(logo_tmo);
+					break;
+				case "com.smithmicro.safepath.family":
+					labelIcon4.setIcon(logo_product);
+					break;
+				case "com.smithmicro.att.securefamily":
+					labelIcon4.setIcon(logo_att);
+					break;
+				}
 				labelIcon4.setVisible(true);
 				saveLogsButton4.setVisible(true);
+				wifiDebbug4.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
 					wifiDebbug4.setText("Disable WiFi");
 				}
@@ -609,9 +676,20 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 					radio1.setSelected(true);
 					radio1.setVisible(true);
+					switch (command1.getSafePathPackage(output1.get(0))) {
+					case "com.smithmicro.tmobile.familymode.test":
+						labelIcon1.setIcon(logo_tmo);
+						break;
+					case "com.smithmicro.safepath.family":
+						labelIcon1.setIcon(logo_product);
+						break;
+					case "com.smithmicro.att.securefamily":
+						labelIcon1.setIcon(logo_att);
+						break;
+					}
 					labelIcon1.setVisible(true);
-
 					saveLogsButton1.setVisible(true);
+					wifiDebbug1.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug1.setText("Disable WiFi");
 					}
@@ -628,8 +706,20 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 					radio2.setSelected(true);
 					radio2.setVisible(true);
+					switch (command1.getSafePathPackage(output1.get(1))) {
+					case "com.smithmicro.tmobile.familymode.test":
+						labelIcon2.setIcon(logo_tmo);
+						break;
+					case "com.smithmicro.safepath.family":
+						labelIcon2.setIcon(logo_product);
+						break;
+					case "com.smithmicro.att.securefamily":
+						labelIcon2.setIcon(logo_att);
+						break;
+					}
 					labelIcon2.setVisible(true);
 					saveLogsButton2.setVisible(true);
+					wifiDebbug2.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug2.setText("Disable WiFi");
 					}
@@ -646,8 +736,20 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 					radio3.setSelected(true);
 					radio3.setVisible(true);
+					switch (command1.getSafePathPackage(output1.get(2))) {
+					case "com.smithmicro.tmobile.familymode.test":
+						labelIcon3.setIcon(logo_tmo);
+						break;
+					case "com.smithmicro.safepath.family":
+						labelIcon3.setIcon(logo_product);
+						break;
+					case "com.smithmicro.att.securefamily":
+						labelIcon3.setIcon(logo_att);
+						break;
+					}
 					labelIcon3.setVisible(true);
 					saveLogsButton3.setVisible(true);
+					wifiDebbug3.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug3.setText("Disable WiFi");
 					}
@@ -664,8 +766,20 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 					radio4.setSelected(true);
 					radio4.setVisible(true);
+					switch (command1.getSafePathPackage(output1.get(3))) {
+					case "com.smithmicro.tmobile.familymode.test":
+						labelIcon4.setIcon(logo_tmo);
+						break;
+					case "com.smithmicro.safepath.family":
+						labelIcon4.setIcon(logo_product);
+						break;
+					case "com.smithmicro.att.securefamily":
+						labelIcon4.setIcon(logo_att);
+						break;
+					}
 					labelIcon4.setVisible(true);
 					saveLogsButton4.setVisible(true);
+					wifiDebbug4.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug4.setText("Disable WiFi");
 					}
@@ -743,33 +857,37 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			String output = command1.takeScreenshot(output1.get(0), "sdcard/", "screenshot.png");
 			new File("C:/AdbToolkit_Screenshots/Device1").mkdirs();
 			command1.pullFile(output1.get(0), output, "C:/AdbToolkit_Screenshots/Device1");
-			JOptionPane.showMessageDialog(this, "Device1 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device1" , "Screenshot Capture",
-					JOptionPane.INFORMATION_MESSAGE);
-			
+			JOptionPane.showMessageDialog(this,
+					"Device1 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device1",
+					"Screenshot Capture", JOptionPane.INFORMATION_MESSAGE);
+
 		} else if (e.getSource() == takeScreenshotButton2) {
 			output1 = command1.getConnectedDevices();
 			String output = command1.takeScreenshot(output1.get(1), "sdcard/", "screenshot.png");
 			new File("C:/AdbToolkit_Screenshots/Device2").mkdirs();
-			command1.pullFile(output1.get(1), output,"C:/AdbToolkit_Screenshots/Device2");
-			JOptionPane.showMessageDialog(this, "Device2 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device2" , "Screenshot Capture",
-					JOptionPane.INFORMATION_MESSAGE);
-			
+			command1.pullFile(output1.get(1), output, "C:/AdbToolkit_Screenshots/Device2");
+			JOptionPane.showMessageDialog(this,
+					"Device2 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device2",
+					"Screenshot Capture", JOptionPane.INFORMATION_MESSAGE);
+
 		} else if (e.getSource() == takeScreenshotButton3) {
 			output1 = command1.getConnectedDevices();
 			String output = command1.takeScreenshot(output1.get(2), "sdcard/", "screenshot.png");
 			new File("C:/AdbToolkit_Screenshots/Device3").mkdirs();
 			command1.pullFile(output1.get(2), output, "C:/AdbToolkit_Screenshots/Device3");
-			JOptionPane.showMessageDialog(this, "Device3 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device3" , "Screenshot Capture",
-					JOptionPane.INFORMATION_MESSAGE);
-			
+			JOptionPane.showMessageDialog(this,
+					"Device3 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device3",
+					"Screenshot Capture", JOptionPane.INFORMATION_MESSAGE);
+
 		} else if (e.getSource() == takeScreenshotButton4) {
 			output1 = command1.getConnectedDevices();
 			String output = command1.takeScreenshot(output1.get(3), "sdcard/", "screenshot.png");
 			new File("C:/AdbToolkit_Screenshots/Device4").mkdirs();
 			command1.pullFile(output1.get(3), output, "C:/AdbToolkit_Screenshots/Device4");
-			JOptionPane.showMessageDialog(this, "Device4 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device4" , "Screenshot Capture",
-					JOptionPane.INFORMATION_MESSAGE);
-			
+			JOptionPane.showMessageDialog(this,
+					"Device4 screenshot captured!" + "\n" + "Location: C:/AdbToolkit_Screenshots/Device4",
+					"Screenshot Capture", JOptionPane.INFORMATION_MESSAGE);
+
 		} else if (e.getSource() == wifiDebbug1) {
 			if (!output1.get(0).endsWith(":5555")) {
 				command1.startWifiDebugging(output1.get(0), ips.get(0));
