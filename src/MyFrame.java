@@ -573,6 +573,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp1.setVisible(true);
 					enableFirebase1.setEnabled(true);
 					enableFirebase1.setVisible(true);
+					saveLogsButton1.setEnabled(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon1.setIcon(logo_product);
@@ -582,6 +583,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp1.setVisible(true);
 					enableFirebase1.setEnabled(true);
 					enableFirebase1.setVisible(true);
+					saveLogsButton1.setEnabled(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon1.setIcon(logo_att);
@@ -591,6 +593,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp1.setVisible(true);
 					enableFirebase1.setEnabled(true);
 					enableFirebase1.setVisible(true);
+					saveLogsButton1.setEnabled(true);
 					break;
 				case "":
 					labelIcon1.setIcon(notInstalled);
@@ -598,6 +601,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					labelIcon1.setVisible(true);
 					uninstallApp1.setVisible(true);
 					enableFirebase1.setVisible(true);
+					saveLogsButton1.setEnabled(false);
 					break;
 				}
 				saveLogsButton1.setVisible(true);
@@ -628,6 +632,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp2.setVisible(true);
 					enableFirebase2.setEnabled(true);
 					enableFirebase2.setVisible(true);
+					saveLogsButton2.setEnabled(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon2.setIcon(logo_product);
@@ -637,6 +642,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp2.setVisible(true);
 					enableFirebase2.setEnabled(true);
 					enableFirebase2.setVisible(true);
+					saveLogsButton2.setEnabled(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon2.setIcon(logo_att);
@@ -646,6 +652,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp2.setVisible(true);
 					enableFirebase2.setEnabled(true);
 					enableFirebase2.setVisible(true);
+					saveLogsButton2.setEnabled(true);
 					break;
 				case "":
 					labelIcon2.setIcon(notInstalled);
@@ -653,6 +660,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					labelIcon2.setVisible(true);
 					uninstallApp2.setVisible(true);
 					enableFirebase2.setVisible(true);
+					saveLogsButton2.setEnabled(false);
 					break;
 				}
 				saveLogsButton2.setVisible(true);
@@ -683,6 +691,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp3.setVisible(true);
 					enableFirebase3.setEnabled(true);
 					enableFirebase3.setVisible(true);
+					saveLogsButton3.setEnabled(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon3.setIcon(logo_product);
@@ -692,6 +701,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp3.setVisible(true);
 					enableFirebase3.setEnabled(true);
 					enableFirebase3.setVisible(true);
+					saveLogsButton3.setEnabled(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon3.setIcon(logo_att);
@@ -701,6 +711,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp3.setVisible(true);
 					enableFirebase3.setEnabled(true);
 					enableFirebase3.setVisible(true);
+					saveLogsButton3.setEnabled(true);
 					break;
 				case "":
 					labelIcon3.setIcon(notInstalled);
@@ -708,6 +719,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					labelIcon3.setVisible(true);
 					uninstallApp3.setVisible(true);
 					enableFirebase3.setVisible(true);
+					saveLogsButton3.setEnabled(false);
 					break;
 				}
 				saveLogsButton3.setVisible(true);
@@ -738,6 +750,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp4.setVisible(true);
 					enableFirebase4.setEnabled(true);
 					enableFirebase4.setVisible(true);
+					saveLogsButton4.setEnabled(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon4.setIcon(logo_product);
@@ -747,6 +760,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp4.setVisible(true);
 					enableFirebase4.setEnabled(true);
 					enableFirebase4.setVisible(true);
+					saveLogsButton4.setEnabled(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon4.setIcon(logo_att);
@@ -756,6 +770,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					uninstallApp4.setVisible(true);
 					enableFirebase4.setEnabled(true);
 					enableFirebase4.setVisible(true);
+					saveLogsButton4.setEnabled(true);
 					break;
 				case "":
 					labelIcon4.setIcon(notInstalled);
@@ -763,6 +778,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					labelIcon4.setVisible(true);
 					uninstallApp4.setVisible(true);
 					enableFirebase4.setVisible(true);
+					saveLogsButton4.setEnabled(false);
 					break;
 				}
 				saveLogsButton4.setVisible(true);
@@ -871,6 +887,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp1.setVisible(true);
 						enableFirebase1.setEnabled(true);
 						enableFirebase1.setVisible(true);
+						saveLogsButton1.setEnabled(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon1.setIcon(logo_product);
@@ -880,6 +897,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp1.setVisible(true);
 						enableFirebase1.setEnabled(true);
 						enableFirebase1.setVisible(true);
+						saveLogsButton1.setEnabled(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon1.setIcon(logo_att);
@@ -889,6 +907,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp1.setVisible(true);
 						enableFirebase1.setEnabled(true);
 						enableFirebase1.setVisible(true);
+						saveLogsButton1.setEnabled(true);
 						break;
 					case "":
 						labelIcon1.setIcon(notInstalled);
@@ -896,6 +915,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						labelIcon1.setVisible(true);
 						uninstallApp1.setVisible(true);
 						enableFirebase1.setVisible(true);
+						saveLogsButton1.setEnabled(false);
 						break;
 					}
 					saveLogsButton1.setVisible(true);
@@ -925,6 +945,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp2.setVisible(true);
 						enableFirebase2.setEnabled(true);
 						enableFirebase2.setVisible(true);
+						saveLogsButton2.setEnabled(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon2.setIcon(logo_product);
@@ -934,6 +955,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp2.setVisible(true);
 						enableFirebase2.setEnabled(true);
 						enableFirebase2.setVisible(true);
+						saveLogsButton2.setEnabled(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon2.setIcon(logo_att);
@@ -943,6 +965,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp2.setVisible(true);
 						enableFirebase2.setEnabled(true);
 						enableFirebase2.setVisible(true);
+						saveLogsButton2.setEnabled(true);
 						break;
 					case "":
 						labelIcon2.setIcon(notInstalled);
@@ -950,6 +973,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						labelIcon2.setVisible(true);
 						uninstallApp2.setVisible(true);
 						enableFirebase2.setVisible(true);
+						saveLogsButton2.setEnabled(false);
 						break;
 					}
 					saveLogsButton2.setVisible(true);
@@ -979,6 +1003,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp3.setVisible(true);
 						enableFirebase3.setEnabled(true);
 						enableFirebase3.setVisible(true);
+						saveLogsButton3.setEnabled(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon3.setIcon(logo_product);
@@ -988,6 +1013,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp3.setVisible(true);
 						enableFirebase3.setEnabled(true);
 						enableFirebase3.setVisible(true);
+						saveLogsButton3.setEnabled(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon3.setIcon(logo_att);
@@ -997,6 +1023,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp3.setVisible(true);
 						enableFirebase3.setEnabled(true);
 						enableFirebase3.setVisible(true);
+						saveLogsButton3.setEnabled(true);
 						break;
 					case "":
 						labelIcon3.setIcon(notInstalled);
@@ -1004,6 +1031,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						labelIcon3.setVisible(true);
 						uninstallApp3.setVisible(true);
 						enableFirebase3.setVisible(true);
+						saveLogsButton3.setEnabled(false);
 						break;
 					}
 					wifiDebbug3.setText("WiFi Debug");
@@ -1033,6 +1061,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp4.setVisible(true);
 						enableFirebase4.setEnabled(true);
 						enableFirebase4.setVisible(true);
+						saveLogsButton4.setEnabled(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon4.setIcon(logo_product);
@@ -1042,6 +1071,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp4.setVisible(true);
 						enableFirebase4.setEnabled(true);
 						enableFirebase4.setVisible(true);
+						saveLogsButton4.setEnabled(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon4.setIcon(logo_att);
@@ -1051,6 +1081,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						uninstallApp4.setVisible(true);
 						enableFirebase4.setEnabled(true);
 						enableFirebase4.setVisible(true);
+						saveLogsButton4.setEnabled(true);
 						break;
 					case "":
 						labelIcon4.setIcon(notInstalled);
@@ -1058,6 +1089,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						labelIcon4.setVisible(true);
 						uninstallApp4.setVisible(true);
 						enableFirebase4.setVisible(true);
+						saveLogsButton4.setEnabled(false);
 						break;
 					}
 					saveLogsButton4.setVisible(true);
@@ -1318,24 +1350,28 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			command1.uninstallApp(output1.get(0), command1.getSafePathPackage(output1.get(0)));
 			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
 					JOptionPane.INFORMATION_MESSAGE);
+			saveLogsButton1.setEnabled(false);
 			devicesButton.doClick();
 
 		} else if (e.getSource() == uninstallApp2) {
 			command1.uninstallApp(output1.get(1), command1.getSafePathPackage(output1.get(1)));
 			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
 					JOptionPane.INFORMATION_MESSAGE);
+			saveLogsButton2.setEnabled(false);
 			devicesButton.doClick();
 
 		} else if (e.getSource() == uninstallApp3) {
 			command1.uninstallApp(output1.get(2), command1.getSafePathPackage(output1.get(2)));
 			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
 					JOptionPane.INFORMATION_MESSAGE);
+			saveLogsButton3.setEnabled(false);
 			devicesButton.doClick();
 
 		} else if (e.getSource() == uninstallApp4) {
 			command1.uninstallApp(output1.get(3), command1.getSafePathPackage(output1.get(3)));
 			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
 					JOptionPane.INFORMATION_MESSAGE);
+			saveLogsButton4.setEnabled(false);
 			devicesButton.doClick();
 
 		} else if (e.getSource() == installButton) {
