@@ -41,10 +41,13 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 	private static final Object lock = new Object();
 	ArrayList<String> ips = new ArrayList<String>();
 	SimpleAttributeSet center = new SimpleAttributeSet();
+
+	ImageIcon buttonIcon = new ImageIcon("display.png");
 	ImageIcon logo_tmo = new ImageIcon("ic_launcher_tmo.png");
 	ImageIcon logo_att = new ImageIcon("ic_launcher_att.png");
 	ImageIcon logo_product = new ImageIcon("ic_launcher_product.png");
-	ImageIcon icon = new ImageIcon("logo.png");
+	ImageIcon frameIcon = new ImageIcon("Android_paranoid.png");
+	ImageIcon notInstalled = new ImageIcon("Android_paranoid.png");
 
 	Path temp = null;
 	File file = null;
@@ -54,9 +57,10 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 	JButton enableFirebase1, enableFirebase2, enableFirebase3, enableFirebase4;
 	JButton reboot1, reboot2, reboot3, reboot4;
 	JButton takeScreenshotButton1, takeScreenshotButton2, takeScreenshotButton3, takeScreenshotButton4;
+	JButton uninstallApp1, uninstallApp2, uninstallApp3, uninstallApp4;
 	JButton devicesButton;
 	JButton fileButton;
-	JButton installButton;
+	JButton installButton, uninstallAllButton;
 	JRadioButton radio1, radio2, radio3, radio4;
 	JTextField fileTextField;
 	JLabel labelIcon1, labelIcon2, labelIcon3, labelIcon4;
@@ -71,25 +75,25 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			ips.add(command1.getWlanIp(output1.get(i)));
 		}
 
-		ImageIcon buttonIcon = new ImageIcon("display.png");
-		Image image = buttonIcon.getImage();
-		Image newimg = image.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
+		Image image1 = buttonIcon.getImage();
+		Image newimg = image1.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH);
 		buttonIcon = new ImageIcon(newimg);
-		
-		ImageIcon logo_tmo = new ImageIcon("ic_launcher_tmo.png");
-		image = logo_tmo.getImage();
-		newimg = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+
+		Image image2 = logo_tmo.getImage();
+		newimg = image2.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
 		logo_tmo = new ImageIcon(newimg);
-		
-		ImageIcon logo_att = new ImageIcon("ic_launcher_att.png");
-		image = logo_att.getImage();
-		newimg = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+
+		Image image3 = logo_att.getImage();
+		newimg = image3.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
 		logo_att = new ImageIcon(newimg);
-		
-		ImageIcon logo_product = new ImageIcon("ic_launcher_product.png");
-		image = logo_product.getImage();
-		newimg = image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+
+		Image image4 = logo_product.getImage();
+		newimg = image4.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
 		logo_product = new ImageIcon(newimg);
+
+		Image image5 = notInstalled.getImage();
+		newimg = image5.getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
+		notInstalled = new ImageIcon(newimg);
 
 		// Setting the menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -104,20 +108,27 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.setJMenuBar(menuBar);
 
 		labelIcon1 = new JLabel();
-		labelIcon1.setBounds(290, 20, 25, 25);
+		labelIcon1.setBounds(275, 0, 120, 50);
+		labelIcon1.setIcon(notInstalled);
+		labelIcon1.setText("test text");
 		labelIcon1.setVisible(false);
 
 		labelIcon2 = new JLabel();
-		labelIcon2.setBounds(495, 20, 25, 25);
+		labelIcon2.setBounds(485, 0, 120, 50);
+		labelIcon2.setIcon(notInstalled);
+		labelIcon2.setText("test text");
 		labelIcon2.setVisible(false);
 
 		labelIcon3 = new JLabel();
-		labelIcon3.setBounds(700, 20, 25, 25);
+		labelIcon3.setBounds(695, 0, 120, 50);
+		labelIcon3.setIcon(notInstalled);
+		labelIcon3.setText("test text");
 		labelIcon3.setVisible(false);
 
 		labelIcon4 = new JLabel();
-		labelIcon4.setBounds(920, 20, 25, 25);
-		labelIcon4.setIcon(buttonIcon);
+		labelIcon4.setBounds(905, 0, 120, 50);
+		labelIcon4.setIcon(notInstalled);
+		labelIcon4.setText("test text");
 		labelIcon4.setVisible(false);
 
 		devicesButton = new JButton("Display Connected Devices");
@@ -130,7 +141,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		devicesButton.setIcon(buttonIcon);
 
 		fileButton = new JButton("Select Build");
-		fileButton.setBounds(2, 270, 100, 25);
+		fileButton.setBounds(0, 270, 100, 25);
 		fileButton.addActionListener(this);
 		fileButton.setFocusable(false);
 		fileButton.setBorder(BorderFactory.createEtchedBorder());
@@ -138,7 +149,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		fileButton.setFont(new Font("Calibri", Font.BOLD, 15));
 		this.add(fileButton);
 
-		saveLogsButton1 = new JButton("SafePath logs");
+		saveLogsButton1 = new JButton("Pull SP Logs");
 		saveLogsButton1.setBounds(200, 160, 95, 30);
 		saveLogsButton1.addActionListener(this);
 		saveLogsButton1.setFocusable(false);
@@ -148,7 +159,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		saveLogsButton1.setVisible(false);
 		this.add(saveLogsButton1);
 
-		saveLogsButton2 = new JButton("SafePath logs");
+		saveLogsButton2 = new JButton("Pull SP Logs");
 		saveLogsButton2.setBounds(410, 160, 95, 30);
 		saveLogsButton2.addActionListener(this);
 		saveLogsButton2.setFocusable(false);
@@ -158,7 +169,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		saveLogsButton2.setVisible(false);
 		this.add(saveLogsButton2);
 
-		saveLogsButton3 = new JButton("SafePath logs");
+		saveLogsButton3 = new JButton("Pull SP Logs");
 		saveLogsButton3.setBounds(620, 160, 95, 30);
 		saveLogsButton3.addActionListener(this);
 		saveLogsButton3.setFocusable(false);
@@ -168,7 +179,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		saveLogsButton3.setVisible(false);
 		this.add(saveLogsButton3);
 
-		saveLogsButton4 = new JButton("SafePath logs");
+		saveLogsButton4 = new JButton("Pull SP Logs");
 		saveLogsButton4.setBounds(830, 160, 95, 30);
 		saveLogsButton4.addActionListener(this);
 		saveLogsButton4.setFocusable(false);
@@ -217,6 +228,50 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		takeScreenshotButton4.setFont(new Font("Calibri", Font.BOLD, 15));
 		takeScreenshotButton4.setVisible(false);
 		this.add(takeScreenshotButton4);
+
+		uninstallApp1 = new JButton("Uninstall");
+		uninstallApp1.setBounds(310, 220, 90, 30);
+		uninstallApp1.addActionListener(this);
+		uninstallApp1.setFocusable(false);
+		uninstallApp1.setBorder(BorderFactory.createEtchedBorder());
+		uninstallApp1.setBackground(Color.lightGray);
+		uninstallApp1.setFont(new Font("Calibri", Font.BOLD, 15));
+		uninstallApp1.setEnabled(false);
+		uninstallApp1.setVisible(false);
+		this.add(uninstallApp1);
+
+		uninstallApp2 = new JButton("Uninstall");
+		uninstallApp2.setBounds(520, 220, 90, 30);
+		uninstallApp2.addActionListener(this);
+		uninstallApp2.setFocusable(false);
+		uninstallApp2.setBorder(BorderFactory.createEtchedBorder());
+		uninstallApp2.setBackground(Color.lightGray);
+		uninstallApp2.setFont(new Font("Calibri", Font.BOLD, 15));
+		uninstallApp2.setEnabled(false);
+		uninstallApp2.setVisible(false);
+		this.add(uninstallApp2);
+
+		uninstallApp3 = new JButton("Uninstall");
+		uninstallApp3.setBounds(730, 220, 90, 30);
+		uninstallApp3.addActionListener(this);
+		uninstallApp3.setFocusable(false);
+		uninstallApp3.setBorder(BorderFactory.createEtchedBorder());
+		uninstallApp3.setBackground(Color.lightGray);
+		uninstallApp3.setFont(new Font("Calibri", Font.BOLD, 15));
+		uninstallApp3.setEnabled(false);
+		uninstallApp3.setVisible(false);
+		this.add(uninstallApp3);
+
+		uninstallApp4 = new JButton("Uninstall");
+		uninstallApp4.setBounds(940, 220, 90, 30);
+		uninstallApp4.addActionListener(this);
+		uninstallApp4.setFocusable(false);
+		uninstallApp4.setBorder(BorderFactory.createEtchedBorder());
+		uninstallApp4.setBackground(Color.lightGray);
+		uninstallApp4.setFont(new Font("Calibri", Font.BOLD, 15));
+		uninstallApp4.setEnabled(false);
+		uninstallApp4.setVisible(false);
+		this.add(uninstallApp4);
 
 		wifiDebbug1 = new JButton("WiFi Debug");
 		wifiDebbug1.setBounds(310, 160, 90, 30);
@@ -278,43 +333,47 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		wifiDebbug4.setVisible(false);
 		this.add(wifiDebbug4);
 
-		enableFirebase1 = new JButton("Enable Firebase");
-		enableFirebase1.setBounds(200, 220, 120, 30);
+		enableFirebase1 = new JButton("Firebase");
+		enableFirebase1.setBounds(200, 220, 95, 30);
 		enableFirebase1.addActionListener(this);
 		enableFirebase1.setFocusable(false);
 		enableFirebase1.setBorder(BorderFactory.createEtchedBorder());
 		enableFirebase1.setBackground(Color.lightGray);
 		enableFirebase1.setFont(new Font("Calibri", Font.BOLD, 15));
+		enableFirebase1.setEnabled(false);
 		enableFirebase1.setVisible(false);
 		this.add(enableFirebase1);
 
-		enableFirebase2 = new JButton("Enable Firebase");
-		enableFirebase2.setBounds(410, 220, 120, 30);
+		enableFirebase2 = new JButton("Firebase");
+		enableFirebase2.setBounds(410, 220, 95, 30);
 		enableFirebase2.addActionListener(this);
 		enableFirebase2.setFocusable(false);
 		enableFirebase2.setBorder(BorderFactory.createEtchedBorder());
 		enableFirebase2.setBackground(Color.lightGray);
 		enableFirebase2.setFont(new Font("Calibri", Font.BOLD, 15));
+		enableFirebase2.setEnabled(false);
 		enableFirebase2.setVisible(false);
 		this.add(enableFirebase2);
 
-		enableFirebase3 = new JButton("Enable Firebase");
-		enableFirebase3.setBounds(620, 220, 120, 30);
+		enableFirebase3 = new JButton("Firebase");
+		enableFirebase3.setBounds(620, 220, 95, 30);
 		enableFirebase3.addActionListener(this);
 		enableFirebase3.setFocusable(false);
 		enableFirebase3.setBorder(BorderFactory.createEtchedBorder());
 		enableFirebase3.setBackground(Color.lightGray);
 		enableFirebase3.setFont(new Font("Calibri", Font.BOLD, 15));
+		enableFirebase3.setEnabled(false);
 		enableFirebase3.setVisible(false);
 		this.add(enableFirebase3);
 
-		enableFirebase4 = new JButton("Enable Firebase");
-		enableFirebase4.setBounds(830, 220, 120, 30);
+		enableFirebase4 = new JButton("Firebase");
+		enableFirebase4.setBounds(830, 220, 95, 30);
 		enableFirebase4.addActionListener(this);
 		enableFirebase4.setFocusable(false);
 		enableFirebase4.setBorder(BorderFactory.createEtchedBorder());
 		enableFirebase4.setBackground(Color.lightGray);
 		enableFirebase4.setFont(new Font("Calibri", Font.BOLD, 15));
+		enableFirebase4.setEnabled(false);
 		enableFirebase4.setVisible(false);
 		this.add(enableFirebase4);
 
@@ -359,7 +418,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.add(reboot4);
 
 		installButton = new JButton("Install");
-		installButton.setBounds(2, 300, 100, 50);
+		installButton.setBounds(0, 300, 100, 50);
 		installButton.addActionListener(this);
 		installButton.setFocusable(false);
 		installButton.setBorder(BorderFactory.createEtchedBorder());
@@ -368,9 +427,27 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		installButton.setEnabled(false);
 		this.add(installButton);
 
+		uninstallAllButton = new JButton("Uninstall All");
+		uninstallAllButton.setBounds(0, 200, 100, 50);
+		uninstallAllButton.addActionListener(this);
+		uninstallAllButton.setFocusable(false);
+		uninstallAllButton.setBorder(BorderFactory.createEtchedBorder());
+		uninstallAllButton.setBackground(Color.lightGray);
+		uninstallAllButton.setFont(new Font("Calibri", Font.BOLD, 16));
+		uninstallAllButton.setEnabled(false);	
+		int j = 0;
+		while (j < output1.size()) {
+			if (command1.checkIfInstalled(output1.get(j))) {
+				uninstallAllButton.setEnabled(true);	
+			}
+			j++;
+			break;
+		}
+		this.add(uninstallAllButton);
+
 		fileTextField = new JTextField();
 		fileTextField.setPreferredSize(new Dimension(250, 40));
-		fileTextField.setBounds(102, 270, 500, 25);
+		fileTextField.setBounds(102, 270, 505, 25);
 		fileTextField.setEditable(false);
 		this.add(fileTextField);
 
@@ -441,7 +518,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setSize(1045, 420);
-		this.setIconImage(icon.getImage());
+		this.setIconImage(frameIcon.getImage());
 		this.add(devicesButton);
 		this.add(labelIcon1);
 		this.add(labelIcon2);
@@ -450,34 +527,34 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 		radio1 = new JRadioButton("Device 1");
 		radio1.addActionListener(this);
-		radio1.setBounds(262, 2, 200, 15);
+		radio1.setBounds(200, 20, 75, 15);
 		radio1.setVisible(false);
 		this.add(radio1);
 
 		radio2 = new JRadioButton("Device 2");
 		radio2.addActionListener(this);
-		radio2.setBounds(467, 2, 200, 15);
+		radio2.setBounds(410, 20, 75, 15);
 		radio2.setVisible(false);
 		this.add(radio2);
 
 		radio3 = new JRadioButton("Device 3");
 		radio3.addActionListener(this);
-		radio3.setBounds(672, 2, 200, 15);
+		radio3.setBounds(620, 20, 75, 15);
 		radio3.setVisible(false);
 		this.add(radio3);
 
 		radio4 = new JRadioButton("Device 4");
 		radio4.addActionListener(this);
-		radio4.setBounds(892, 2, 200, 15);
+		radio4.setBounds(830, 20, 75, 15);
 		radio4.setVisible(false);
 		this.add(radio4);
 
 		bar = new JProgressBar();
-		bar.setBounds(102, 300, 500, 25);
+		bar.setBounds(102, 300, 505, 25);
 		bar.setStringPainted(true);
 		bar.setFont(new Font("Calibri", Font.BOLD, 13));
 		bar.setBackground(new Color(238, 238, 238));
-		bar.setString("Waiting for build...");
+		bar.setString("");
 		this.add(bar);
 
 		for (int i = 0; i < output1.size(); i++) {
@@ -490,15 +567,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				switch (command1.getSafePathPackage(output1.get(0))) {
 				case "com.smithmicro.tmobile.familymode.test":
 					labelIcon1.setIcon(logo_tmo);
+					labelIcon1.setText("Family Mode");
+					labelIcon1.setVisible(true);
+					uninstallApp1.setEnabled(true);
+					uninstallApp1.setVisible(true);
+					enableFirebase1.setEnabled(true);
+					enableFirebase1.setVisible(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon1.setIcon(logo_product);
+					labelIcon1.setText("SP Family");
+					labelIcon1.setVisible(true);
+					uninstallApp1.setEnabled(true);
+					uninstallApp1.setVisible(true);
+					enableFirebase1.setEnabled(true);
+					enableFirebase1.setVisible(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon1.setIcon(logo_att);
+					labelIcon1.setText("Secure Family");
+					labelIcon1.setVisible(true);
+					uninstallApp1.setEnabled(true);
+					uninstallApp1.setVisible(true);
+					enableFirebase1.setEnabled(true);
+					enableFirebase1.setVisible(true);
+					break;
+				case "":
+					labelIcon1.setIcon(notInstalled);
+					labelIcon1.setText("Not Installed");
+					labelIcon1.setVisible(true);
+					uninstallApp1.setVisible(true);
+					enableFirebase1.setVisible(true);
 					break;
 				}
-				labelIcon1.setVisible(true);
 				saveLogsButton1.setVisible(true);
 				wifiDebbug1.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
@@ -521,15 +622,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				switch (command1.getSafePathPackage(output1.get(1))) {
 				case "com.smithmicro.tmobile.familymode.test":
 					labelIcon2.setIcon(logo_tmo);
+					labelIcon2.setText("Family Mode");
+					labelIcon2.setVisible(true);
+					uninstallApp2.setEnabled(true);
+					uninstallApp2.setVisible(true);
+					enableFirebase2.setEnabled(true);
+					enableFirebase2.setVisible(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon2.setIcon(logo_product);
+					labelIcon2.setText("SP Family");
+					labelIcon2.setVisible(true);
+					uninstallApp2.setEnabled(true);
+					uninstallApp2.setVisible(true);
+					enableFirebase2.setEnabled(true);
+					enableFirebase2.setVisible(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon2.setIcon(logo_att);
+					labelIcon2.setText("Secure Family");
+					labelIcon2.setVisible(true);
+					uninstallApp2.setEnabled(true);
+					uninstallApp2.setVisible(true);
+					enableFirebase2.setEnabled(true);
+					enableFirebase2.setVisible(true);
+					break;
+				case "":
+					labelIcon2.setIcon(notInstalled);
+					labelIcon2.setText("Not Installed");
+					labelIcon2.setVisible(true);
+					uninstallApp2.setVisible(true);
+					enableFirebase2.setVisible(true);
 					break;
 				}
-				labelIcon2.setVisible(true);
 				saveLogsButton2.setVisible(true);
 				wifiDebbug2.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
@@ -552,15 +677,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				switch (command1.getSafePathPackage(output1.get(2))) {
 				case "com.smithmicro.tmobile.familymode.test":
 					labelIcon3.setIcon(logo_tmo);
+					labelIcon3.setText("Family Mode");
+					labelIcon3.setVisible(true);
+					uninstallApp3.setEnabled(true);
+					uninstallApp3.setVisible(true);
+					enableFirebase3.setEnabled(true);
+					enableFirebase3.setVisible(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon3.setIcon(logo_product);
+					labelIcon3.setText("SP Family");
+					labelIcon3.setVisible(true);
+					uninstallApp3.setEnabled(true);
+					uninstallApp3.setVisible(true);
+					enableFirebase3.setEnabled(true);
+					enableFirebase3.setVisible(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon3.setIcon(logo_att);
+					labelIcon3.setText("Secure Family");
+					labelIcon3.setVisible(true);
+					uninstallApp3.setEnabled(true);
+					uninstallApp3.setVisible(true);
+					enableFirebase3.setEnabled(true);
+					enableFirebase3.setVisible(true);
+					break;
+				case "":
+					labelIcon3.setIcon(notInstalled);
+					labelIcon3.setText("Not Installed");
+					labelIcon3.setVisible(true);
+					uninstallApp3.setVisible(true);
+					enableFirebase3.setVisible(true);
 					break;
 				}
-				labelIcon3.setVisible(true);
 				saveLogsButton3.setVisible(true);
 				wifiDebbug3.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
@@ -583,15 +732,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				switch (command1.getSafePathPackage(output1.get(3))) {
 				case "com.smithmicro.tmobile.familymode.test":
 					labelIcon4.setIcon(logo_tmo);
+					labelIcon4.setText("Family Mode");
+					labelIcon4.setVisible(true);
+					uninstallApp4.setEnabled(true);
+					uninstallApp4.setVisible(true);
+					enableFirebase4.setEnabled(true);
+					enableFirebase4.setVisible(true);
 					break;
 				case "com.smithmicro.safepath.family":
 					labelIcon4.setIcon(logo_product);
+					labelIcon4.setText("SP Family");
+					labelIcon4.setVisible(true);
+					uninstallApp4.setEnabled(true);
+					uninstallApp4.setVisible(true);
+					enableFirebase4.setEnabled(true);
+					enableFirebase4.setVisible(true);
 					break;
 				case "com.smithmicro.att.securefamily":
 					labelIcon4.setIcon(logo_att);
+					labelIcon4.setText("SecureFamily");
+					labelIcon4.setVisible(true);
+					uninstallApp4.setEnabled(true);
+					uninstallApp4.setVisible(true);
+					enableFirebase4.setEnabled(true);
+					enableFirebase4.setVisible(true);
+					break;
+				case "":
+					labelIcon4.setIcon(notInstalled);
+					labelIcon4.setText("Not Installed");
+					labelIcon4.setVisible(true);
+					uninstallApp4.setVisible(true);
+					enableFirebase4.setVisible(true);
 					break;
 				}
-				labelIcon4.setVisible(true);
 				saveLogsButton4.setVisible(true);
 				wifiDebbug4.setText("WiFi Debug");
 				if (output1.get(i).endsWith(":5555")) {
@@ -624,13 +797,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == devicesButton) {
-			output1.clear();
-			ips.clear();
-			output1 = command1.getConnectedDevices();
-			for (int i = 0; i < output1.size(); i++) {
-				ips.add(command1.getWlanIp(output1.get(i)));
-			}
-
 			device1TextPane.setVisible(false);
 			device2TextPane.setVisible(false);
 			device3TextPane.setVisible(false);
@@ -640,11 +806,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			radio2.setVisible(false);
 			radio3.setVisible(false);
 			radio4.setVisible(false);
-
-			labelIcon1.setVisible(false);
-			labelIcon2.setVisible(false);
-			labelIcon3.setVisible(false);
-			labelIcon4.setVisible(false);
 
 			saveLogsButton1.setVisible(false);
 			saveLogsButton2.setVisible(false);
@@ -661,15 +822,40 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			wifiDebbug3.setVisible(false);
 			wifiDebbug4.setVisible(false);
 
+			enableFirebase1.setEnabled(false);
+			enableFirebase2.setEnabled(false);
+			enableFirebase3.setEnabled(false);
+			enableFirebase4.setEnabled(false);
 			enableFirebase1.setVisible(false);
 			enableFirebase2.setVisible(false);
 			enableFirebase3.setVisible(false);
 			enableFirebase4.setVisible(false);
 
+			uninstallApp1.setEnabled(false);
+			uninstallApp2.setEnabled(false);
+			uninstallApp3.setEnabled(false);
+			uninstallApp4.setEnabled(false);
+			uninstallApp1.setVisible(false);
+			uninstallApp2.setVisible(false);
+			uninstallApp3.setVisible(false);
+			uninstallApp4.setVisible(false);
+
 			reboot1.setVisible(false);
 			reboot2.setVisible(false);
 			reboot3.setVisible(false);
 			reboot4.setVisible(false);
+
+			labelIcon1.setVisible(false);
+			labelIcon2.setVisible(false);
+			labelIcon3.setVisible(false);
+			labelIcon4.setVisible(false);
+
+			output1.clear();
+			ips.clear();
+			output1 = command1.getConnectedDevices();
+			for (int i = 0; i < output1.size(); i++) {
+				ips.add(command1.getWlanIp(output1.get(i)));
+			}
 
 			for (int i = 0; i < output1.size(); i++) {
 				if (i == 0) {
@@ -679,15 +865,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					switch (command1.getSafePathPackage(output1.get(0))) {
 					case "com.smithmicro.tmobile.familymode.test":
 						labelIcon1.setIcon(logo_tmo);
+						labelIcon1.setText("Family Mode");
+						labelIcon1.setVisible(true);
+						uninstallApp1.setEnabled(true);
+						uninstallApp1.setVisible(true);
+						enableFirebase1.setEnabled(true);
+						enableFirebase1.setVisible(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon1.setIcon(logo_product);
+						labelIcon1.setText("SP Family");
+						labelIcon1.setVisible(true);
+						uninstallApp1.setEnabled(true);
+						uninstallApp1.setVisible(true);
+						enableFirebase1.setEnabled(true);
+						enableFirebase1.setVisible(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon1.setIcon(logo_att);
+						labelIcon1.setText("Secure Family");
+						labelIcon1.setVisible(true);
+						uninstallApp1.setEnabled(true);
+						uninstallApp1.setVisible(true);
+						enableFirebase1.setEnabled(true);
+						enableFirebase1.setVisible(true);
+						break;
+					case "":
+						labelIcon1.setIcon(notInstalled);
+						labelIcon1.setText("Not Installed");
+						labelIcon1.setVisible(true);
+						uninstallApp1.setVisible(true);
+						enableFirebase1.setVisible(true);
 						break;
 					}
-					labelIcon1.setVisible(true);
 					saveLogsButton1.setVisible(true);
 					wifiDebbug1.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
@@ -709,15 +919,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					switch (command1.getSafePathPackage(output1.get(1))) {
 					case "com.smithmicro.tmobile.familymode.test":
 						labelIcon2.setIcon(logo_tmo);
+						labelIcon2.setText("Family Mode");
+						labelIcon2.setVisible(true);
+						uninstallApp2.setEnabled(true);
+						uninstallApp2.setVisible(true);
+						enableFirebase2.setEnabled(true);
+						enableFirebase2.setVisible(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon2.setIcon(logo_product);
+						labelIcon2.setText("SP Family");
+						labelIcon2.setVisible(true);
+						uninstallApp2.setEnabled(true);
+						uninstallApp2.setVisible(true);
+						enableFirebase2.setEnabled(true);
+						enableFirebase2.setVisible(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon2.setIcon(logo_att);
+						labelIcon2.setText("Secure Family");
+						labelIcon2.setVisible(true);
+						uninstallApp2.setEnabled(true);
+						uninstallApp2.setVisible(true);
+						enableFirebase2.setEnabled(true);
+						enableFirebase2.setVisible(true);
+						break;
+					case "":
+						labelIcon2.setIcon(notInstalled);
+						labelIcon2.setText("Not Installed");
+						labelIcon2.setVisible(true);
+						uninstallApp2.setVisible(true);
+						enableFirebase2.setVisible(true);
 						break;
 					}
-					labelIcon2.setVisible(true);
 					saveLogsButton2.setVisible(true);
 					wifiDebbug2.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
@@ -739,20 +973,44 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					switch (command1.getSafePathPackage(output1.get(2))) {
 					case "com.smithmicro.tmobile.familymode.test":
 						labelIcon3.setIcon(logo_tmo);
+						labelIcon3.setText("Family Mode");
+						labelIcon3.setVisible(true);
+						uninstallApp3.setEnabled(true);
+						uninstallApp3.setVisible(true);
+						enableFirebase3.setEnabled(true);
+						enableFirebase3.setVisible(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon3.setIcon(logo_product);
+						labelIcon3.setText("SP Family");
+						labelIcon3.setVisible(true);
+						uninstallApp3.setEnabled(true);
+						uninstallApp3.setVisible(true);
+						enableFirebase3.setEnabled(true);
+						enableFirebase3.setVisible(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon3.setIcon(logo_att);
+						labelIcon3.setText("Secure Family");
+						labelIcon3.setVisible(true);
+						uninstallApp3.setEnabled(true);
+						uninstallApp3.setVisible(true);
+						enableFirebase3.setEnabled(true);
+						enableFirebase3.setVisible(true);
+						break;
+					case "":
+						labelIcon3.setIcon(notInstalled);
+						labelIcon3.setText("Not Installed");
+						labelIcon3.setVisible(true);
+						uninstallApp3.setVisible(true);
+						enableFirebase3.setVisible(true);
 						break;
 					}
-					labelIcon3.setVisible(true);
-					saveLogsButton3.setVisible(true);
 					wifiDebbug3.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
 						wifiDebbug3.setText("Disable WiFi");
 					}
+					saveLogsButton3.setVisible(true);
 					wifiDebbug3.setVisible(true);
 					enableFirebase3.setVisible(true);
 					reboot3.setVisible(true);
@@ -769,15 +1027,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 					switch (command1.getSafePathPackage(output1.get(3))) {
 					case "com.smithmicro.tmobile.familymode.test":
 						labelIcon4.setIcon(logo_tmo);
+						labelIcon4.setText("FamilyMode");
+						labelIcon4.setVisible(true);
+						uninstallApp4.setEnabled(true);
+						uninstallApp4.setVisible(true);
+						enableFirebase4.setEnabled(true);
+						enableFirebase4.setVisible(true);
 						break;
 					case "com.smithmicro.safepath.family":
 						labelIcon4.setIcon(logo_product);
+						labelIcon4.setText("SP Family");
+						labelIcon4.setVisible(true);
+						uninstallApp4.setEnabled(true);
+						uninstallApp4.setVisible(true);
+						enableFirebase4.setEnabled(true);
+						enableFirebase4.setVisible(true);
 						break;
 					case "com.smithmicro.att.securefamily":
 						labelIcon4.setIcon(logo_att);
+						labelIcon4.setText("Secure Family");
+						labelIcon4.setVisible(true);
+						uninstallApp4.setEnabled(true);
+						uninstallApp4.setVisible(true);
+						enableFirebase4.setEnabled(true);
+						enableFirebase4.setVisible(true);
+						break;
+					case "":
+						labelIcon4.setIcon(notInstalled);
+						labelIcon4.setText("Not Installed");
+						labelIcon4.setVisible(true);
+						uninstallApp4.setVisible(true);
+						enableFirebase4.setVisible(true);
 						break;
 					}
-					labelIcon4.setVisible(true);
 					saveLogsButton4.setVisible(true);
 					wifiDebbug4.setText("WiFi Debug");
 					if (output1.get(i).endsWith(":5555")) {
@@ -809,47 +1091,71 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			}
 
 		} else if (e.getSource() == saveLogsButton1) {
-			JFileChooser fileChooser = new JFileChooser("C:\\logs");
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int response = fileChooser.showSaveDialog(null);
-			if (response == JFileChooser.APPROVE_OPTION) {
-				file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-				output1 = command1.getConnectedDevices();
-				command1.saveLogs(output1.get(0), file.getAbsolutePath());
-
+			if (!command1.checkIfInstalled(output1.get(0))) {
+				JOptionPane.showMessageDialog(this, "App is not installed!", "Safe Path Logs",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				JFileChooser fileChooser = new JFileChooser("C:\\logs");
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int response = fileChooser.showSaveDialog(null);
+				if (response == JFileChooser.APPROVE_OPTION) {
+					file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+					output1 = command1.getConnectedDevices();
+					command1.saveLogs(output1.get(0), file.getAbsolutePath());
+					JOptionPane.showMessageDialog(this, "Safe Path logs saved!", "Safe Path Logs",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 
 		} else if (e.getSource() == saveLogsButton2) {
-			JFileChooser fileChooser = new JFileChooser("C:\\logs");
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int response = fileChooser.showSaveDialog(null);
-
-			if (response == JFileChooser.APPROVE_OPTION) {
-				file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-				output1 = command1.getConnectedDevices();
-				command1.saveLogs(output1.get(1), file.getAbsolutePath());
+			if (!command1.checkIfInstalled(output1.get(1))) {
+				JOptionPane.showMessageDialog(this, "App is not installed!", "Safe Path Logs",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				JFileChooser fileChooser = new JFileChooser("C:\\logs");
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int response = fileChooser.showSaveDialog(null);
+				if (response == JFileChooser.APPROVE_OPTION) {
+					file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+					output1 = command1.getConnectedDevices();
+					command1.saveLogs(output1.get(1), file.getAbsolutePath());
+					JOptionPane.showMessageDialog(this, "Safe Path logs saved!", "Safe Path Logs",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 
 		} else if (e.getSource() == saveLogsButton3) {
-			JFileChooser fileChooser = new JFileChooser("C:\\logs");
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int response = fileChooser.showSaveDialog(null);
-
-			if (response == JFileChooser.APPROVE_OPTION) {
-				file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-				output1 = command1.getConnectedDevices();
-				command1.saveLogs(output1.get(2), file.getAbsolutePath());
+			if (!command1.checkIfInstalled(output1.get(2))) {
+				JOptionPane.showMessageDialog(this, "App is not installed!", "Safe Path Logs",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				JFileChooser fileChooser = new JFileChooser("C:\\logs");
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int response = fileChooser.showSaveDialog(null);
+				if (response == JFileChooser.APPROVE_OPTION) {
+					file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+					output1 = command1.getConnectedDevices();
+					command1.saveLogs(output1.get(2), file.getAbsolutePath());
+					JOptionPane.showMessageDialog(this, "Safe Path logs saved!", "Safe Path Logs",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 
 		} else if (e.getSource() == saveLogsButton4) {
-			JFileChooser fileChooser = new JFileChooser("C:\\logs");
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			int response = fileChooser.showSaveDialog(null);
-
-			if (response == JFileChooser.APPROVE_OPTION) {
-				file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-				output1 = command1.getConnectedDevices();
-				command1.saveLogs(output1.get(3), file.getAbsolutePath());
+			if (!command1.checkIfInstalled(output1.get(3))) {
+				JOptionPane.showMessageDialog(this, "App is not installed!", "Safe Path Logs",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				JFileChooser fileChooser = new JFileChooser("C:\\logs");
+				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int response = fileChooser.showSaveDialog(null);
+				if (response == JFileChooser.APPROVE_OPTION) {
+					file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+					output1 = command1.getConnectedDevices();
+					command1.saveLogs(output1.get(3), file.getAbsolutePath());
+					JOptionPane.showMessageDialog(this, "Safe Path logs saved!", "Safe Path Logs",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 
 		} else if (e.getSource() == takeScreenshotButton1) {
@@ -897,7 +1203,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 								+ "You may disconnect USB cable from this device.",
 						"Enable WiFi Debugging.", JOptionPane.INFORMATION_MESSAGE);
 				wifiDebbug4.setText("Disable WiFi");
-				devicesButton.doClick(500);
+				devicesButton.doClick(200);
 			} else {
 				command1.stopWifiDebugging(output1.get(0), ips.get(0));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
@@ -914,7 +1220,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 								+ "You may disconnect USB cable from this device.",
 						"Enable WiFi Debugging.", JOptionPane.INFORMATION_MESSAGE);
 				wifiDebbug4.setText("Disable WiFi");
-				devicesButton.doClick(500);
+				devicesButton.doClick(200);
 			} else {
 				command1.stopWifiDebugging(output1.get(1), ips.get(1));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
@@ -931,7 +1237,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 								+ "You may disconnect USB cable from this device.",
 						"Enable WiFi Debugging.", JOptionPane.INFORMATION_MESSAGE);
 				wifiDebbug4.setText("Disable WiFi");
-				devicesButton.doClick(500);
+				devicesButton.doClick(200);
 			} else {
 				command1.stopWifiDebugging(output1.get(2), ips.get(2));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
@@ -948,7 +1254,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 								+ "You may disconnect USB cable from this device.",
 						"Enable WiFi Debugging.", JOptionPane.INFORMATION_MESSAGE);
 				wifiDebbug4.setText("Disable WiFi");
-				devicesButton.doClick(500);
+				devicesButton.doClick(200);
 			} else {
 				command1.stopWifiDebugging(output1.get(3), ips.get(3));
 				JOptionPane.showMessageDialog(this, "Debugging over WiFi is disabled!", "Disable WiFi Debugging.",
@@ -964,9 +1270,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						"Firebase Debugging enabled!" + "\n"
 								+ "Make sure 'Logging Analytics Events' toggle button is also enabled in Debug menu.",
 						"Enable Firebase Debugging", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "App is not installed!", "Enable Firebase Debugging",
-						JOptionPane.ERROR_MESSAGE);
 			}
 
 		} else if (e.getSource() == enableFirebase2) {
@@ -977,9 +1280,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						"Firebase Debugging enabled!" + "\n"
 								+ "Make sure 'Logging Analytics Events' toggle button is also enabled in Debug menu.",
 						"Enable Firebase Debugging", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "App is not installed!", "Enable Firebase Debugging",
-						JOptionPane.ERROR_MESSAGE);
 			}
 
 		} else if (e.getSource() == enableFirebase3) {
@@ -990,9 +1290,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						"Firebase Debugging enabled!" + "\n"
 								+ "Make sure 'Logging Analytics Events' toggle button is also enabled in Debug menu.",
 						"Enable Firebase Debugging", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "App is not installed!", "Enable Firebase Debugging",
-						JOptionPane.ERROR_MESSAGE);
 			}
 
 		} else if (e.getSource() == enableFirebase4) {
@@ -1003,10 +1300,8 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 						"Firebase Debugging enabled!" + "\n"
 								+ "Make sure 'Logging Analytics Events' toggle button is also enabled in Debug menu.",
 						"Enable Firebase Debugging", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(this, "App is not installed!", "Enable Firebase Debugging",
-						JOptionPane.ERROR_MESSAGE);
 			}
+
 		} else if (e.getSource() == reboot1) {
 			command1.reboot(output1.get(0));
 
@@ -1018,6 +1313,30 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 
 		} else if (e.getSource() == reboot4) {
 			command1.reboot(output1.get(3));
+
+		} else if (e.getSource() == uninstallApp1) {
+			command1.uninstallApp(output1.get(0), command1.getSafePathPackage(output1.get(0)));
+			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
+					JOptionPane.INFORMATION_MESSAGE);
+			devicesButton.doClick();
+
+		} else if (e.getSource() == uninstallApp2) {
+			command1.uninstallApp(output1.get(1), command1.getSafePathPackage(output1.get(1)));
+			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
+					JOptionPane.INFORMATION_MESSAGE);
+			devicesButton.doClick();
+
+		} else if (e.getSource() == uninstallApp3) {
+			command1.uninstallApp(output1.get(2), command1.getSafePathPackage(output1.get(2)));
+			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
+					JOptionPane.INFORMATION_MESSAGE);
+			devicesButton.doClick();
+
+		} else if (e.getSource() == uninstallApp4) {
+			command1.uninstallApp(output1.get(3), command1.getSafePathPackage(output1.get(3)));
+			JOptionPane.showMessageDialog(this, "App is uninstalled!", "Enable WiFi Debugging.",
+					JOptionPane.INFORMATION_MESSAGE);
+			devicesButton.doClick();
 
 		} else if (e.getSource() == installButton) {
 			output1 = command1.getConnectedDevices();
@@ -1045,6 +1364,23 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				task4.addPropertyChangeListener(this);
 				task4.execute();
 			}
+			uninstallAllButton.setEnabled(true);
+
+		} else if (e.getSource() == uninstallAllButton) {
+			output1 = command1.getConnectedDevices();
+			bar.setString("Uninstalling...");
+			bar.setIndeterminate(true);
+			bar.setBackground(new Color(238, 238, 238));
+			uninstallAllButton.setEnabled(false);
+			int i = 0;
+			Task[] task = new Task[4];
+			while (i < output1.size()) {
+				task[i] = new Task("adb -s " + output1.get(i) + " shell pm uninstall "
+						+ command1.getSafePathPackage(output1.get(i)));
+				task[i].addPropertyChangeListener(this);
+				task[i].execute();
+				i++;
+			}
 		}
 	}
 
@@ -1071,7 +1407,7 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		@Override
 		public Void doInBackground() {
 			increaseCounter();
-			command1.command(command);
+			command1.runCommand(command);
 			return null;
 		}
 
@@ -1081,8 +1417,12 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			if (counter == 0) {
 				bar.setString("Done!");
 				bar.setBackground(Color.green);
-				installButton.setEnabled(true);
+				if (fileTextField.getText() != "") {
+					installButton.setEnabled(true);
+				}
 				bar.setIndeterminate(false);
+				devicesButton.doClick();
+
 			}
 		}
 	}
