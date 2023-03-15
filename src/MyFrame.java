@@ -43,11 +43,11 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 	SimpleAttributeSet center = new SimpleAttributeSet();
 
 	ImageIcon buttonIcon = new ImageIcon("display.png");
-	ImageIcon logo_tmo = new ImageIcon("ic_launcher_tmo.png");
-	ImageIcon logo_att = new ImageIcon("ic_launcher_att.png");
-	ImageIcon logo_product = new ImageIcon("ic_launcher_product.png");
-	ImageIcon frameIcon = new ImageIcon("Android_paranoid.png");
-	ImageIcon notInstalled = new ImageIcon("Android_paranoid.png");
+	ImageIcon logo_tmo = new ImageIcon("tmo.png");
+	ImageIcon logo_att = new ImageIcon("att.png");
+	ImageIcon logo_product = new ImageIcon("product.png");
+	ImageIcon frameIcon = new ImageIcon("Android.png");
+	ImageIcon notInstalled = new ImageIcon("Android.png");
 
 	Path temp = null;
 	File file = null;
@@ -67,6 +67,8 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 	JTextPane staticPane;
 	JTextPane device1TextPane, device2TextPane, device3TextPane, device4TextPane;
 	JProgressBar bar;
+
+	boolean radio1State = false, radio2State = false, radio3State = false, radio4State = false;
 
 	MyFrame() {
 
@@ -434,11 +436,11 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 		uninstallAllButton.setBorder(BorderFactory.createEtchedBorder());
 		uninstallAllButton.setBackground(Color.lightGray);
 		uninstallAllButton.setFont(new Font("Calibri", Font.BOLD, 16));
-		uninstallAllButton.setEnabled(false);	
+		uninstallAllButton.setEnabled(false);
 		int j = 0;
 		while (j < output1.size()) {
 			if (command1.checkIfInstalled(output1.get(j))) {
-				uninstallAllButton.setEnabled(true);	
+				uninstallAllButton.setEnabled(true);
 			}
 			j++;
 			break;
@@ -1380,25 +1382,39 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 			bar.setIndeterminate(true);
 			bar.setBackground(new Color(238, 238, 238));
 			installButton.setEnabled(false);
+
 			if (radio1.isSelected() && output1.size() > 0) {
+				radio1State = true;
 				Task task1 = new Task("adb -s " + output1.get(0) + " install " + "\"" + file.getAbsolutePath() + "\"");
 				task1.addPropertyChangeListener(this);
 				task1.execute();
+			} else {
+				radio1State = false;
 			}
+
 			if (radio2.isSelected() && output1.size() > 1) {
+				radio2State = true;
 				Task task2 = new Task("adb -s " + output1.get(1) + " install " + "\"" + file.getAbsolutePath() + "\"");
 				task2.addPropertyChangeListener(this);
 				task2.execute();
+			} else {
+				radio2State = false;
 			}
 			if (radio3.isSelected() && output1.size() > 2) {
+				radio3State = true;
 				Task task3 = new Task("adb -s " + output1.get(2) + " install " + "\"" + file.getAbsolutePath() + "\"");
 				task3.addPropertyChangeListener(this);
 				task3.execute();
+			} else {
+				radio3State = false;
 			}
 			if (radio4.isSelected() && output1.size() > 3) {
+				radio4State = true;
 				Task task4 = new Task("adb -s " + output1.get(3) + " install " + "\"" + file.getAbsolutePath() + "\"");
 				task4.addPropertyChangeListener(this);
 				task4.execute();
+			} else {
+				radio1State = false;
 			}
 			uninstallAllButton.setEnabled(true);
 
@@ -1458,7 +1474,6 @@ public class MyFrame extends JFrame implements ActionListener, PropertyChangeLis
 				}
 				bar.setIndeterminate(false);
 				devicesButton.doClick();
-
 			}
 		}
 	}
